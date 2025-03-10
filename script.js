@@ -65,7 +65,7 @@ if (document.getElementById('discord-online')) {
     function fetchDiscordData() {
         fetch('https://discord.com/api/v10/invites/6WVqFCfVcW?with_counts=true', {
             headers: {
-                'Authorization': 'Bot YOUR_BOT_TOKEN_HERE' // استبدل YOUR_BOT_TOKEN_HERE بتوكن البوت
+                'Authorization': 'Bot YOUR_BOT_TOKEN_HERE'
             }
         })
         .then(response => response.json())
@@ -82,9 +82,10 @@ if (document.getElementById('discord-online')) {
     fetchDiscordData();
 }
 
-// المقترحات (فقط في صفحة suggestions.html)
+// المقترحات (يخزن في localStorage)
 if (document.getElementById('submit-suggestion')) {
-    document.getElementById('submit-suggestion').addEventListener('click', function() {
+    document.getElementById('submit-suggestion').addEventListener('click', function(e) {
+        e.preventDefault();
         const name = document.getElementById('suggestion-name').value.trim();
         const title = document.getElementById('suggestion-title').value.trim();
         const details = document.getElementById('suggestion-details').value.trim();
@@ -103,13 +104,47 @@ if (document.getElementById('submit-suggestion')) {
             return;
         }
 
-        console.log('اسم:', name, 'عنوان:', title, 'تفاصيل:', details);
-        localStorage.setItem(`suggestion_${name}`, now);
-        message.innerHTML = 'تم إرسال اقتراحك بنجاح!';
+        // تخزين الاقتراح في localStorage
+        let suggestions = JSON.parse(localStorage.getItem('suggestions')) || [];
+        suggestions.push({ name, title, details, date: new Date().toLocaleString() });
+        localStorage.setItem('suggestions', JSON.stringify(suggestions));
+
+        message.innerHTML = 'تم إرسال الاقتراح بنجاح! يمكنك رؤيته في صفحة الإدارة.';
         document.getElementById('suggestion-name').value = '';
         document.getElementById('suggestion-title').value = '';
         document.getElementById('suggestion-details').value = '';
     });
+}
+
+// عرض الاقتراحات في صفحة الإدارة
+if (document.getElementById('admin')) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const adminKey = urlParams.get('key'); // مفتاح سري للوصول
+    const secretKey = 'your_secret_key'; // استبدل بمفتاح سري خاص بيك
+
+    if (adminKey !== secretKey) {
+        document.body.innerHTML = '<h2 class="section-title">غير مصرح بالدخول!</h2>';
+    } else {
+        const suggestions = JSON.parse(localStorage.getItem('suggestions')) || [];
+        const suggestionsList = document.getElementById('suggestions-list');
+
+        if (suggestions.length === 0) {
+            suggestionsList.innerHTML = '<p>لا يوجد اقتراحات بعد.</p>';
+        } else {
+            suggestions.forEach((suggestion, index) => {
+                const suggestionBox = document.createElement('div');
+                suggestionBox.className = 'suggestion-box';
+                suggestionBox.innerHTML = `
+                    <div class="suggestion-item"><strong>اسم الشخص المرسل:</strong> ${suggestion.name}</div>
+                    <div class="suggestion-item"><strong>الموضوع:</strong> ${suggestion.title}</div>
+                    <div class="suggestion-item"><strong>اقتراحه:</strong> ${suggestion.details}</div>
+                    <div class="suggestion-item"><strong>التاريخ:</strong> ${suggestion.date}</div>
+                    <hr>
+                `;
+                suggestionsList.appendChild(suggestionBox);
+            });
+        }
+    }
 }
 
 // إضافة زر لتغيير الوضع

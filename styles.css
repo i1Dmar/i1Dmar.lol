@@ -83,12 +83,12 @@ body.white-mode .transparent-box {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.transparent-box .section-title { /* تغيير من h2 إلى class section-title */
+.transparent-box .section-title {
     color: #ffffff;
     font-size: 28px;
     margin-bottom: 15px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* زيادة الظل للوضوح */
-    font-weight: 700; /* وزن نص أعلى للتميز */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    font-weight: 700;
 }
 
 body.white-mode .transparent-box .section-title {
@@ -215,6 +215,33 @@ body.white-mode .input-box input, body.white-mode .input-box textarea {
 
 body.white-mode #submit-suggestion {
     color: #fff;
+}
+
+/* تنسيق الاقتراحات في صفحة الإدارة */
+.suggestion-box {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+body.white-mode .suggestion-box {
+    background: rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+.suggestion-item {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.suggestion-item strong {
+    color: #48d9f6;
+}
+
+body.white-mode .suggestion-item strong {
+    color: #1462f3;
 }
 
 /* تنسيق الفوتر */
