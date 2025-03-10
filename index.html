@@ -5,59 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>موقعي i1Dmar</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- حذف رابط Font Awesome لأننا ما بنحتاجه -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- بقية الكود زي ما هو -->
-    <div id="top-bar">
-        <div id="user-info">
-            <input type="file" id="upload-image" style="display:none;" />
-            <img id="profile-image" src="default-avatar.png" alt="صورة شخصية" onclick="document.getElementById('upload-image').click()" />
+    <!-- شريط التنقل العلوي -->
+    <nav id="top-nav">
+        <a href="#about-me" class="nav-btn" style="background-color: #ffffff;">معلومات عني</a>
+        <a href="#twitch-alerts" class="nav-btn">البثوث الحالية</a>
+        <a href="#discord-server" class="nav-btn" style="background-color: #1462f3;">سيرفري الديسكورد</a>
+        <a href="#suggestions" class="nav-btn" style="background-color: #48d9f6;">مقترحات</a>
+    </nav>
+
+    <!-- قسم معلومات عني -->
+    <section id="about-me" class="section-box">
+        <div class="transparent-box">
+            <p>أهلاً نورت الصفحة ❤️</p>
+            <p>أنا خالد يلقبوني بـ"دمار"، إنسان فاضي وأحب أسوي اللي أحبه. مواليد 98، أحب أستكشف وأطور من نفسي بأشياء تفيدني، وهذا أول موقع حبيت أسويه كتجربة مبدئية.</p>
+            <p>أحب أقضي وقتي غالبًا على البي سي وأجلس مع العيال ومرات أبث في تويتش، وعلى برامج التواصل ألهي نفسي به.</p>
+            <p>قناتي على تويتش تحصلونها تحت، وحياكم الله وقت أبث تنوروني وتسعدوني ❤️</p>
+            <div id="social-links">
+                <a href="https://instagram.com/i1dmar" target="_blank" class="social-icon instagram">
+                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg" alt="Instagram" />
+                </a>
+                <a href="https://discord.gg/6WVqFCfVcW" target="_blank" class="social-icon discord">
+                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/discord.svg" alt="Discord" />
+                </a>
+                <a href="https://youtube.com/i1dmar" target="_blank" class="social-icon youtube">
+                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/youtube.svg" alt="YouTube" />
+                </a>
+            </div>
         </div>
-        <div id="dark-mode-toggle">
-            <button onclick="toggleDarkMode()">الدارك مود</button>
+    </section>
+
+    <!-- قسم تنبيهات Twitch -->
+    <section id="twitch-alerts" class="section-box">
+        <div class="transparent-box">
+            <h2>تنبيهات البثوث</h2>
+            <div id="twitch-status"></div>
+            <div id="twitch-title"></div>
+            <div id="twitch-game"></div>
+            <img id="twitch-image" alt="Twitch Thumbnail" />
         </div>
-    </div>
-
-    <div id="site-name">
-        <h1>i1Dmar</h1>
-    </div>
-
-    <!-- روابط التواصل الاجتماعي بصور SVG -->
-    <div id="social-links">
-        <a href="https://instagram.com/i1dmar" target="_blank" class="social-icon instagram">
-            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg" alt="Instagram" />
-        </a>
-        <a href="https://youtube.com/i1dmar" target="_blank" class="social-icon youtube">
-            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/youtube.svg" alt="YouTube" />
-        </a>
-        <a href="https://discord.gg/6WVqFCfVcW" target="_blank" class="social-icon discord">
-            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/discord.svg" alt="Discord" />
-        </a>
-    </div>
-
-    <!-- بقية الأقسام زي ما هي -->
-    <section id="about-me">
-        <h2>عني</h2>
-        <p id="bio-about">أهلاً، أنا خالد، ملقب بـ"دمار". إنسان فاضي وأحب أسوي اللي أحبه. مواليد 98، أحب أستكشف وأطور من نفسي بأشياء تفيدني، وهذا أول موقع حبيت أسويه كتجربة مبدئية.</p>
     </section>
 
-    <section id="more-info">
-        <h3>معلومات عني</h3>
-        <p id="bio-more">أحب أقضي وقتي غالبًا على البي سي، ألعب مع العيال، ومرات أبث على تويتش. أقضي باقي يومي فيه، وأحب أتعرف على أشخاص جدد وأكوّن صداقات تستمر لسنين. قناتي تحصلونها تحت.</p>
+    <!-- قسم سيرفر Discord -->
+    <section id="discord-server" class="section-box">
+        <div class="transparent-box">
+            <h2>سيرفري الديسكورد</h2>
+            <p>عدد الأونلاين: <span id="discord-online">جاري التحميل...</span></p>
+            <p>الأعضاء في القنوات الصوتية: <span id="discord-voice">جاري التحميل...</span></p>
+            <a href="https://discord.gg/6WVqFCfVcW" target="_blank" class="discord-join">انضم للسيرفر</a>
+            <iframe src="https://discord.com/widget?id=6WVqFCfVcW&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0"></iframe>
+        </div>
     </section>
 
-    <section id="twitch-alerts">
-        <h4>تنبيهات البثوث</h4>
-        <h4>i1Dmar | قناتي في تويتش</h4>
-        <div id="twitch-status"></div>
-        <div id="twitch-title"></div>
-        <div id="twitch-game"></div>
-        <img id="twitch-image" alt="Thumbnail" />
+    <!-- قسم المقترحات -->
+    <section id="suggestions" class="section-box">
+        <div class="transparent-box">
+            <h2>مقترحات اضيفها للصفحة</h2>
+            <div class="suggestion-form">
+                <div class="input-box">
+                    <label>اسمك الكريم ❤️</label>
+                    <input type="text" id="suggestion-name" placeholder="اكتب اسمك" maxlength="50">
+                </div>
+                <div class="input-box">
+                    <label>ضع مسمى لاقتراحك</label>
+                    <input type="text" id="suggestion-title" placeholder="عنوان الاقتراح" maxlength="100">
+                </div>
+                <div class="input-box">
+                    <label>اكتب لي ماهو اقتراحك بالتفصيل</label>
+                    <textarea id="suggestion-details" placeholder="اكتب اقتراحك هنا" maxlength="500"></textarea>
+                </div>
+                <button id="submit-suggestion">إرسال الاقتراح</button>
+                <p id="suggestion-message"></p>
+            </div>
+        </div>
     </section>
 
+    <!-- الفوتر -->
     <footer>
-        <p>© 2025 i1Dmar. جميع الحقوق محفوظة.</p>
+        <p>.ةظفحم قوقحلا عيمج . i1Dmar 5202 ©</p>
     </footer>
 
     <script src="script.js"></script>

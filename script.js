@@ -1,44 +1,34 @@
-// وظيفة تغيير وضع الداكن
-function toggleDarkMode() {
-    document.body.classList.toggle("dark-mode");
+// Dark/White Mode Toggle
+function toggleMode() {
     if (document.body.classList.contains("dark-mode")) {
-        localStorage.setItem("dark-mode", "enabled");
+        document.body.classList.remove("dark-mode");
+        document.body.classList.add("white-mode");
+        localStorage.setItem("mode", "white");
+    } else if (document.body.classList.contains("white-mode")) {
+        document.body.classList.remove("white-mode");
+        document.body.classList.add("dark-mode");
+        localStorage.setItem("mode", "dark");
     } else {
-        localStorage.removeItem("dark-mode");
+        document.body.classList.add("dark-mode");
+        localStorage.setItem("mode", "dark");
     }
 }
 
-// تطبيق الوضع الداكن إذا كان مفعل مسبقًا
-if (localStorage.getItem("dark-mode") === "enabled") {
+if (localStorage.getItem("mode") === "white") {
+    document.body.classList.add("white-mode");
+} else {
     document.body.classList.add("dark-mode");
 }
 
-// وظيفة تحميل الصورة الشخصية
-document.getElementById('upload-image').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            document.getElementById('profile-image').src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-    }
-});
-
-// وظيفة جلب بيانات Twitch
+// Twitch API
 function fetchTwitchData() {
     fetch('https://api.twitch.tv/helix/streams?user_login=i1dmar', {
         headers: {
-            'Client-ID': 'f8ukqch3sggujn8co4dnua2tc1ku2a', // تأكد من الـ Client-ID
-            'Authorization': 'Bearer rraem4oevyma46d3cc7fjro0l9admy' // تأكد من الـ Token
+            'Client-ID': 'f8ukqch3sggujn8co4dnua2tc1ku2a',
+            'Authorization': 'Bearer rraem4oevyma46d3cc7fjro0l9admy'
         }
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('خطأ في جلب بيانات Twitch: ' + response.status);
-        }
-        return response.json();
-    })
+    .then(response => response.ok ? response.json() : Promise.reject('خطأ في الـ API'))
     .then(data => {
         const twitchStatus = document.getElementById('twitch-status');
         const twitchTitle = document.getElementById('twitch-title');
@@ -46,24 +36,85 @@ function fetchTwitchData() {
         const twitchImage = document.getElementById('twitch-image');
 
         if (data.data && data.data.length > 0) {
-            twitchStatus.innerHTML = 'البث قيد التشغيل';
+            twitchStatus.innerHTML = 'البث شغال الآن';
             twitchTitle.innerHTML = 'العنوان: ' + data.data[0].title;
             twitchGame.innerHTML = 'اللعبة: ' + data.data[0].game_name;
             twitchImage.src = data.data[0].thumbnail_url.replace('{width}', '400').replace('{height}', '225');
+            twitchImage.style.display = 'block';
         } else {
-            twitchStatus.innerHTML = 'لا يوجد بث حاليًا';
+            twitchStatus.innerHTML = 'البث متوقف حاليًا';
             twitchTitle.innerHTML = '';
             twitchGame.innerHTML = '';
-            twitchImage.src = 'default-twitch-placeholder.png'; // صورة افتراضية لو ما في بث
+            twitchImage.src = 'https://via.placeholder.com/400x225?text=البث+متوقف';
+            twitchImage.style.display = 'block';
         }
     })
     .catch(error => {
         console.error('خطأ:', error);
-        document.getElementById('twitch-status').innerHTML = 'خطأ في الاتصال بـ Twitch';
+        document.getElementById('twitch-status').innerHTML = 'خطأ في جلب بيانات Twitch';
     });
 }
 
-// تشغيل التحقق من Twitch عند تحميل الصفحة
 fetchTwitchData();
-// تحديث كل 30 ثانية
 setInterval(fetchTwitchData, 30000);
+
+// Discord API
+function fetchDiscordData() {
+    fetch('https://discord.com/api/v10/invites/6WVqFCfVcW?with_counts=true', {
+        headers: {
+            'Authorization': 'Bot YOUR_BOT_TOKEN_HERE' // استبدل YOUR_BOT_TOKEN_HERE بتوكن البوت
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('discord-online').innerHTML = data.approximate_presence_count || 'غير متاح';
+        document.getElementById('discord-voice').innerHTML = 'تحت التطوير'; // تحتاج API إضافي
+    })
+    .catch(error => {
+        console.error('خطأ Discord:', error);
+        document.getElementById('discord-online').innerHTML = 'غير متاح';
+    });
+}
+
+fetchDiscordData();
+
+// المقترحات
+document.getElementById('submit-suggestion').addEventListener('click', function() {
+    const name = document.getElementById('suggestion-name').value.trim();
+    const title = document.getElementById('suggestion-title').value.trim();
+    const details = document.getElementById('suggestion-details').value.trim();
+    const message = document.getElementById('suggestion-message');
+
+    if (!name || !title || !details) {
+        message.innerHTML = 'يرجى ملء جميع الحقول!';
+        return;
+    }
+
+    const lastSubmit = localStorage.getItem(`suggestion_${name}`);
+    const now = new Date().toDateString();
+
+    if (lastSubmit === now) {
+        message.innerHTML = 'لقد قدمت اقتراحًا اليوم، جرب غدًا!';
+        return;
+    }
+
+    console.log('اسم:', name, 'عنوان:', title, 'تفاصيل:', details);
+    localStorage.setItem(`suggestion_${name}`, now);
+    message.innerHTML = 'تم إرسال اقتراحك بنجاح!';
+    document.getElementById('suggestion-name').value = '';
+    document.getElementById('suggestion-title').value = '';
+    document.getElementById('suggestion-details').value = '';
+});
+
+// إضافة زر لتغيير الوضع
+const nav = document.getElementById('top-nav');
+const modeBtn = document.createElement('button');
+modeBtn.innerHTML = 'تغيير الوضع';
+modeBtn.style.backgroundColor = '#48d9f6';
+modeBtn.style.color = '#fff';
+modeBtn.style.padding = '8px 20px';
+modeBtn.style.border = 'none';
+modeBtn.style.borderRadius = '5px';
+modeBtn.style.cursor = 'pointer';
+modeBtn.addEventListener('click', toggleMode);
+nav.appendChild(modeBtn);
