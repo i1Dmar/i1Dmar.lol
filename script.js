@@ -120,7 +120,7 @@ if (document.getElementById('submit-suggestion')) {
 if (document.getElementById('admin')) {
     const urlParams = new URLSearchParams(window.location.search);
     const adminKey = urlParams.get('key'); // مفتاح سري للوصول
-    const secretKey = 'your_secret_key'; // استبدل بمفتاح سري خاص بيك
+    const secretKey = 'i1Dmari1998'; // المفتاح السري اللي اخترته
 
     if (adminKey !== secretKey) {
         document.body.innerHTML = '<h2 class="section-title">غير مصرح بالدخول!</h2>';
