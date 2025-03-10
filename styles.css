@@ -52,11 +52,16 @@ body.dark-mode {
 }
 
 /* تنسيق الصورة الشخصية داخل دائرة */
-#user-info img {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;  /* جعل الصورة في شكل دائرة */
-    object-fit: cover;  /* ملء الصورة داخل الدائرة */
+#user-info {
+    position: relative;
+    display: inline-block;
+}
+
+#profile-image {
+    width: 50px; /* يمكنك تغيير الحجم حسب الحاجة */
+    height: 50px; /* تأكد من أن العرض والطول متماثلين للحصول على صورة دائرية */
+    border-radius: 50%; /* يجعل الصورة دائرية */
+    object-fit: cover; /* يضمن أن الصورة ستملأ الدائرة بالكامل */
     cursor: pointer;
 }
 
