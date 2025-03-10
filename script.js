@@ -20,6 +20,14 @@ if (localStorage.getItem("mode") === "white") {
     document.body.classList.add("dark-mode");
 }
 
+// إضافة حدث لزر الـ Dark Mode
+document.addEventListener('DOMContentLoaded', function() {
+    const modeBtn = document.getElementById('mode-toggle');
+    if (modeBtn) {
+        modeBtn.addEventListener('click', toggleMode);
+    }
+});
+
 // Twitch API (فقط في صفحة twitch.html)
 if (document.getElementById('twitch-status')) {
     function fetchTwitchData() {
@@ -159,16 +167,3 @@ if (document.getElementById('admin')) {
         });
     }
 }
-
-// إضافة زر لتغيير الوضع
-const nav = document.getElementById('top-nav');
-const modeBtn = document.createElement('button');
-modeBtn.innerHTML = 'تغيير الوضع';
-modeBtn.style.backgroundColor = '#48d9f6';
-modeBtn.style.color = '#fff';
-modeBtn.style.padding = '8px 20px';
-modeBtn.style.border = 'none';
-modeBtn.style.borderRadius = '5px';
-modeBtn.style.cursor = 'pointer';
-modeBtn.addEventListener('click', toggleMode);
-nav.appendChild(modeBtn);

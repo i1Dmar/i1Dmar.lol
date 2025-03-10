@@ -6,7 +6,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background: url('https://i.ibb.co/LX88TWvc/eclipse.jpg') no-repeat center center fixed;
+    background: url('https://i.ibb.co/tpMT2jP/background.jpg') no-repeat center center fixed; /* الخلفية الجديدة */
     background-size: cover;
     color: #e0e0e0;
     direction: rtl;
@@ -20,6 +20,44 @@ body.dark-mode {
 body.white-mode {
     background-color: rgba(240, 240, 240, 0.9);
     color: #333;
+}
+
+/* زر الـ Dark Mode في الزاوية */
+.mode-toggle {
+    position: fixed;
+    top: 10px;
+    left: 10px; /* الزاوية العلوية اليسرى */
+    background-color: #48d9f6;
+    color: #fff;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1001;
+    transition: opacity 0.3s ease;
+}
+
+.mode-toggle:hover {
+    opacity: 0.8;
+}
+
+/* لوقو الموقع */
+.site-logo {
+    position: fixed;
+    top: 10px;
+    right: 10px; /* الزاوية العلوية اليمنى */
+    z-index: 1001;
+}
+
+.site-logo img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; /* شكل دائري */
+    transition: opacity 0.3s ease;
+}
+
+.site-logo img:hover {
+    opacity: 0.8;
 }
 
 /* شريط التنقل العلوي */
@@ -66,7 +104,7 @@ body.white-mode .nav-btn {
     padding: 8px 20px;
     text-decoration: none;
     color: #fff;
-    background-color: #fa5659; /* اللون المطلوب */
+    background-color: #fa5659;
     border-radius: 5px;
     transition: opacity 0.3s ease;
 }
@@ -142,7 +180,7 @@ body.white-mode .social-icon {
 .instagram { color: #E4405F; }
 .discord { color: #7289DA; }
 .youtube { color: #FF0000; }
-.twitch { color: #6441A5; } /* لون رسمي لتويتش */
+.twitch { color: #6441A5; }
 
 .social-icon:hover {
     opacity: 0.8;
@@ -314,5 +352,9 @@ footer p {
     #twitch-image {
         width: 100%;
         height: auto;
+    }
+    .site-logo img {
+        width: 40px;
+        height: 40px;
     }
 }
