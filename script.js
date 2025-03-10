@@ -1,33 +1,3 @@
-// Dark/White Mode Toggle
-function toggleMode() {
-    if (document.body.classList.contains("dark-mode")) {
-        document.body.classList.remove("dark-mode");
-        document.body.classList.add("white-mode");
-        localStorage.setItem("mode", "white");
-    } else if (document.body.classList.contains("white-mode")) {
-        document.body.classList.remove("white-mode");
-        document.body.classList.add("dark-mode");
-        localStorage.setItem("mode", "dark");
-    } else {
-        document.body.classList.add("dark-mode");
-        localStorage.setItem("mode", "dark");
-    }
-}
-
-if (localStorage.getItem("mode") === "white") {
-    document.body.classList.add("white-mode");
-} else {
-    document.body.classList.add("dark-mode");
-}
-
-// إضافة حدث لزر الـ Dark Mode
-document.addEventListener('DOMContentLoaded', function() {
-    const modeBtn = document.getElementById('mode-toggle');
-    if (modeBtn) {
-        modeBtn.addEventListener('click', toggleMode);
-    }
-});
-
 // Twitch API (فقط في صفحة twitch.html)
 if (document.getElementById('twitch-status')) {
     function fetchTwitchData() {
@@ -54,13 +24,14 @@ if (document.getElementById('twitch-status')) {
                 twitchStatus.innerHTML = 'البث متوقف حاليًا';
                 twitchTitle.innerHTML = '';
                 twitchGame.innerHTML = '';
-                twitchImage.src = 'https://via.placeholder.com/400x225?text=البث+متوقف';
+                twitchImage.src = 'https://i.ibb.co/2yWqP1G/twitch-offline.jpg';
                 twitchImage.style.display = 'block';
             }
         })
         .catch(error => {
             console.error('خطأ:', error);
             document.getElementById('twitch-status').innerHTML = 'خطأ في جلب بيانات Twitch';
+            document.getElementById('twitch-image').src = 'https://i.ibb.co/2yWqP1G/twitch-offline.jpg';
         });
     }
 
@@ -112,7 +83,6 @@ if (document.getElementById('submit-suggestion')) {
             return;
         }
 
-        // تخزين الاقتراح في localStorage
         let suggestions = JSON.parse(localStorage.getItem('suggestions')) || [];
         suggestions.push({ name, title, details, date: new Date().toLocaleString() });
         localStorage.setItem('suggestions', JSON.stringify(suggestions));
@@ -131,9 +101,8 @@ if (document.getElementById('admin')) {
     const adminKeyInput = document.getElementById('admin-key');
     const adminLoginBtn = document.getElementById('admin-login-btn');
     const adminError = document.getElementById('admin-error');
-    const secretKey = 'i1Dmari1998'; // المفتاح السري الخاص بيك
+    const secretKey = 'i1Dmari1998';
 
-    // تحقق إذا كان المستخدم مسجل دخوله مسبقًا
     const isLoggedIn = localStorage.getItem('adminLoggedIn');
 
     if (isLoggedIn === 'true') {
@@ -145,7 +114,6 @@ if (document.getElementById('admin')) {
         adminContent.style.display = 'none';
     }
 
-    // حدث زر تسجيل الدخول
     adminLoginBtn.addEventListener('click', function() {
         const enteredKey = adminKeyInput.value.trim();
         if (enteredKey === secretKey) {
@@ -158,7 +126,6 @@ if (document.getElementById('admin')) {
         }
     });
 
-    // تحميل الاقتراحات
     function loadSuggestions() {
         const suggestions = JSON.parse(localStorage.getItem('suggestions')) || [];
         const suggestionsList = document.getElementById('suggestions-list');
@@ -180,14 +147,13 @@ if (document.getElementById('admin')) {
                 suggestionsList.appendChild(suggestionBox);
             });
 
-            // إضافة حدث الحذف لكل زر
             document.querySelectorAll('.delete-btn').forEach(button => {
                 button.addEventListener('click', function() {
                     const index = this.getAttribute('data-index');
                     let suggestions = JSON.parse(localStorage.getItem('suggestions')) || [];
-                    suggestions.splice(index, 1); // حذف الاقتراح
+                    suggestions.splice(index, 1);
                     localStorage.setItem('suggestions', JSON.stringify(suggestions));
-                    location.reload(); // تحديث الصفحة
+                    location.reload();
                 });
             });
         }

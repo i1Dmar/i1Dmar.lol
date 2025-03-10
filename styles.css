@@ -6,11 +6,10 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background: url('https://i.ibb.co/zVhT29H9/ae477c644b8b9649e44d780ce1bc5b1b.jpg') no-repeat center center fixed; /* الخلفية الجديدة */
+    background: url('https://i.ibb.co/zVhT29H9/ae477c644b8b9649e44d780ce1bc5b1b.jpg') no-repeat center center fixed;
     background-size: cover;
-    color: #e0e0e0;
+    color: #333;
     direction: rtl;
-    transition: color 0.3s ease;
     position: relative;
 }
 
@@ -22,36 +21,8 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6); /* تعتيم أقوى قليلاً للخلفية الجديدة */
+    background: rgba(0, 0, 0, 0.6);
     z-index: -1;
-}
-
-body.dark-mode {
-    color: #333;
-}
-
-body.white-mode {
-    background-color: rgba(240, 240, 240, 0.9);
-    color: #333;
-}
-
-/* زر الـ Dark Mode في الزاوية */
-.mode-toggle {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    background-color: #48d9f6;
-    color: #fff;
-    padding: 8px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    z-index: 1001;
-    transition: opacity 0.3s ease;
-}
-
-.mode-toggle:hover {
-    opacity: 0.8;
 }
 
 /* لوقو الموقع */
@@ -78,7 +49,7 @@ body.white-mode {
     display: flex;
     justify-content: center;
     padding: 10px;
-    background-color: rgba(51, 51, 51, 0.9);
+    background-color: rgba(240, 240, 240, 0.9);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -88,7 +59,8 @@ body.white-mode {
     margin: 0 15px;
     padding: 8px 20px;
     text-decoration: none;
-    color: #fff;
+    color: #333;
+    background-color: #ddd;
     border-radius: 5px;
     transition: opacity 0.3s ease;
 }
@@ -99,16 +71,6 @@ body.white-mode {
 
 .nav-btn:hover {
     opacity: 0.8;
-}
-
-body.dark-mode .nav-btn {
-    color: #fff;
-    background-color: #444;
-}
-
-body.white-mode .nav-btn {
-    color: #333;
-    background-color: #ddd;
 }
 
 /* تنسيق زر الإدارة */
@@ -138,44 +100,25 @@ body.white-mode .nav-btn {
 }
 
 .transparent-box {
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(255, 255, 255, 0.9);
     padding: 20px;
     border-radius: 10px;
     max-width: 800px;
     margin: 0 auto;
     backdrop-filter: blur(5px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-}
-
-body.white-mode .transparent-box {
-    background: rgba(255, 255, 255, 0.9);
-    color: #333;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    color: #333;
 }
 
 .transparent-box .section-title {
-    color: #ffffff;
+    color: #333;
     font-size: 28px;
     margin-bottom: 15px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
     font-weight: 700;
 }
 
-body.dark-mode .transparent-box .section-title {
-    color: #48d9f6;
-}
-
-body.white-mode .transparent-box .section-title {
-    color: #333;
-    text-shadow: none;
-}
-
-/* تنسيق النصوص في الـ Dark Mode */
-body.dark-mode .transparent-box p {
-    color: #333;
-}
-
-body.white-mode .transparent-box p {
+/* تنسيق النصوص */
+.transparent-box p {
     color: #333;
 }
 
@@ -189,16 +132,10 @@ body.white-mode .transparent-box p {
     max-width: 300px;
     padding: 10px;
     margin: 10px 0;
-    border: 1px solid #ccc;
+    border: 1px solid #999;
     border-radius: 5px;
-    background: rgba(0, 0, 0, 0.3);
-    color: #fff;
-}
-
-body.white-mode #admin-key {
     background: rgba(255, 255, 255, 0.8);
     color: #333;
-    border-color: #999;
 }
 
 #admin-login-btn {
@@ -235,11 +172,7 @@ body.white-mode #admin-key {
     fill: currentColor;
 }
 
-body.dark-mode .social-icon {
-    color: #333;
-}
-
-body.white-mode .social-icon {
+.social-icon {
     color: #333;
 }
 
@@ -265,14 +198,6 @@ body.white-mode .social-icon {
 
 #twitch-status, #twitch-title, #twitch-game {
     margin: 5px 0;
-    color: #fff;
-}
-
-body.dark-mode #twitch-status, body.dark-mode #twitch-title, body.dark-mode #twitch-game {
-    color: #333;
-}
-
-body.white-mode #twitch-status, body.white-mode #twitch-title, body.white-mode #twitch-game {
     color: #333;
 }
 
@@ -291,10 +216,6 @@ body.white-mode #twitch-status, body.white-mode #twitch-title, body.white-mode #
     opacity: 0.8;
 }
 
-body.white-mode .discord-join {
-    color: #fff;
-}
-
 /* تنسيق المقترحات */
 .suggestion-form {
     margin-top: 20px;
@@ -307,14 +228,6 @@ body.white-mode .discord-join {
 .input-box label {
     display: block;
     margin-bottom: 5px;
-    color: #e0e0e0;
-}
-
-body.dark-mode .input-box label {
-    color: #333;
-}
-
-body.white-mode .input-box label {
     color: #333;
 }
 
@@ -322,16 +235,10 @@ body.white-mode .input-box label {
     width: 100%;
     max-width: 500px;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #999;
     border-radius: 5px;
-    background: rgba(0, 0, 0, 0.3);
-    color: #fff;
-}
-
-body.white-mode .input-box input, body.white-mode .input-box textarea {
     background: rgba(255, 255, 255, 0.8);
     color: #333;
-    border-color: #999;
 }
 
 #submit-suggestion {
@@ -347,25 +254,13 @@ body.white-mode .input-box input, body.white-mode .input-box textarea {
     opacity: 0.8;
 }
 
-body.white-mode #submit-suggestion {
-    color: #fff;
-}
-
 /* تنسيق الاقتراحات في صفحة الإدارة */
 .suggestion-box {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.1);
     padding: 15px;
     border-radius: 10px;
     margin-bottom: 15px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-}
-
-body.white-mode .suggestion-box {
-    background: rgba(0, 0, 0, 0.1);
-    color: #333;
-}
-
-body.dark-mode .suggestion-box {
     color: #333;
 }
 
@@ -375,10 +270,6 @@ body.dark-mode .suggestion-box {
 }
 
 .suggestion-item strong {
-    color: #48d9f6;
-}
-
-body.white-mode .suggestion-item strong {
     color: #1462f3;
 }
 
@@ -402,18 +293,9 @@ body.white-mode .suggestion-item strong {
 footer {
     text-align: center;
     padding: 10px;
-    background-color: rgba(51, 51, 51, 0.9);
-    color: #fff;
-    direction: ltr;
-}
-
-body.dark-mode footer {
-    color: #333;
-}
-
-body.white-mode footer {
-    color: #333;
     background-color: rgba(240, 240, 240, 0.9);
+    color: #333;
+    direction: ltr;
 }
 
 footer p {
