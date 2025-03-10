@@ -24,14 +24,14 @@ if (document.getElementById('twitch-status')) {
                 twitchStatus.innerHTML = 'البث متوقف حاليًا';
                 twitchTitle.innerHTML = '';
                 twitchGame.innerHTML = '';
-                twitchImage.src = 'https://i.ibb.co/2yWqP1G/twitch-offline.jpg';
+                twitchImage.src = 'https://i.ibb.co/twFxqzXM/21.png';
                 twitchImage.style.display = 'block';
             }
         })
         .catch(error => {
             console.error('خطأ:', error);
             document.getElementById('twitch-status').innerHTML = 'خطأ في جلب بيانات Twitch';
-            document.getElementById('twitch-image').src = 'https://i.ibb.co/2yWqP1G/twitch-offline.jpg';
+            document.getElementById('twitch-image').src = 'https://i.ibb.co/twFxqzXM/21.png';
         });
     }
 
