@@ -23,14 +23,28 @@
         <a href="twitch.html" class="nav-btn">البثوث الحالية</a>
         <a href="discord.html" class="nav-btn" style="background-color: #1462f3;">سيرفري الديسكورد</a>
         <a href="suggestions.html" class="nav-btn" style="background-color: #48d9f6;">مقترحات</a>
-        <a href="admin.html?key=i1Dmari1998" class="admin-btn active">الإدارة</a>
+        <a href="admin.html" class="admin-btn active">الإدارة</a>
     </nav>
 
     <!-- قسم الإدارة -->
     <section id="admin" class="section-box">
         <div class="transparent-box">
-            <h2 class="section-title">الإدارة - الاقتراحات</h2>
-            <div id="suggestions-list"></div>
+            <!-- نموذج إدخال المفتاح السري -->
+            <div id="admin-login" style="display: none;">
+                <h2 class="section-title">تسجيل الدخول</h2>
+                <div class="input-box">
+                    <label for="admin-key">أدخل المفتاح السري:</label>
+                    <input type="password" id="admin-key" placeholder="المفتاح السري">
+                </div>
+                <button id="admin-login-btn">دخول</button>
+                <p id="admin-error"></p>
+            </div>
+
+            <!-- محتوى الإدارة -->
+            <div id="admin-content" style="display: none;">
+                <h2 class="section-title">الإدارة - الاقتراحات</h2>
+                <div id="suggestions-list"></div>
+            </div>
         </div>
     </section>
 

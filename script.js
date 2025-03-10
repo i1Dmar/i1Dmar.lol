@@ -124,46 +124,72 @@ if (document.getElementById('submit-suggestion')) {
     });
 }
 
-// عرض الاقتراحات في صفحة الإدارة مع زر الحذف
+// التحقق من الدخول لصفحة الإدارة
 if (document.getElementById('admin')) {
-    const urlParams = new URLSearchParams(window.location.search);
-    const adminKey = urlParams.get('key'); // مفتاح سري للوصول
+    const adminLogin = document.getElementById('admin-login');
+    const adminContent = document.getElementById('admin-content');
+    const adminKeyInput = document.getElementById('admin-key');
+    const adminLoginBtn = document.getElementById('admin-login-btn');
+    const adminError = document.getElementById('admin-error');
     const secretKey = 'i1Dmari1998'; // المفتاح السري الخاص بيك
 
-    if (adminKey !== secretKey) {
-        document.body.innerHTML = '<h2 class="section-title">غير مصرح لك بالدخول!</h2>';
-        return;
+    // تحقق إذا كان المستخدم مسجل دخوله مسبقًا
+    const isLoggedIn = localStorage.getItem('adminLoggedIn');
+
+    if (isLoggedIn === 'true') {
+        adminLogin.style.display = 'none';
+        adminContent.style.display = 'block';
+        loadSuggestions();
+    } else {
+        adminLogin.style.display = 'block';
+        adminContent.style.display = 'none';
     }
 
-    const suggestions = JSON.parse(localStorage.getItem('suggestions')) || [];
-    const suggestionsList = document.getElementById('suggestions-list');
+    // حدث زر تسجيل الدخول
+    adminLoginBtn.addEventListener('click', function() {
+        const enteredKey = adminKeyInput.value.trim();
+        if (enteredKey === secretKey) {
+            localStorage.setItem('adminLoggedIn', 'true');
+            adminLogin.style.display = 'none';
+            adminContent.style.display = 'block';
+            loadSuggestions();
+        } else {
+            adminError.innerHTML = 'المفتاح السري غير صحيح!';
+        }
+    });
 
-    if (suggestions.length === 0) {
-        suggestionsList.innerHTML = '<p>لا يوجد اقتراحات بعد.</p>';
-    } else {
-        suggestions.forEach((suggestion, index) => {
-            const suggestionBox = document.createElement('div');
-            suggestionBox.className = 'suggestion-box';
-            suggestionBox.innerHTML = `
-                <div class="suggestion-item"><strong>اسم الشخص المرسل:</strong> ${suggestion.name}</div>
-                <div class="suggestion-item"><strong>الموضوع:</strong> ${suggestion.title}</div>
-                <div class="suggestion-item"><strong>اقتراحه:</strong> ${suggestion.details}</div>
-                <div class="suggestion-item"><strong>التاريخ:</strong> ${suggestion.date}</div>
-                <button class="delete-btn" data-index="${index}">حذف الاقتراح</button>
-                <hr>
-            `;
-            suggestionsList.appendChild(suggestionBox);
-        });
+    // تحميل الاقتراحات
+    function loadSuggestions() {
+        const suggestions = JSON.parse(localStorage.getItem('suggestions')) || [];
+        const suggestionsList = document.getElementById('suggestions-list');
 
-        // إضافة حدث الحذف لكل زر
-        document.querySelectorAll('.delete-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const index = this.getAttribute('data-index');
-                let suggestions = JSON.parse(localStorage.getItem('suggestions')) || [];
-                suggestions.splice(index, 1); // حذف الاقتراح
-                localStorage.setItem('suggestions', JSON.stringify(suggestions));
-                location.reload(); // تحديث الصفحة
+        if (suggestions.length === 0) {
+            suggestionsList.innerHTML = '<p>لا يوجد اقتراحات بعد.</p>';
+        } else {
+            suggestions.forEach((suggestion, index) => {
+                const suggestionBox = document.createElement('div');
+                suggestionBox.className = 'suggestion-box';
+                suggestionBox.innerHTML = `
+                    <div class="suggestion-item"><strong>اسم الشخص المرسل:</strong> ${suggestion.name}</div>
+                    <div class="suggestion-item"><strong>الموضوع:</strong> ${suggestion.title}</div>
+                    <div class="suggestion-item"><strong>اقتراحه:</strong> ${suggestion.details}</div>
+                    <div class="suggestion-item"><strong>التاريخ:</strong> ${suggestion.date}</div>
+                    <button class="delete-btn" data-index="${index}">حذف الاقتراح</button>
+                    <hr>
+                `;
+                suggestionsList.appendChild(suggestionBox);
             });
-        });
+
+            // إضافة حدث الحذف لكل زر
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const index = this.getAttribute('data-index');
+                    let suggestions = JSON.parse(localStorage.getItem('suggestions')) || [];
+                    suggestions.splice(index, 1); // حذف الاقتراح
+                    localStorage.setItem('suggestions', JSON.stringify(suggestions));
+                    location.reload(); // تحديث الصفحة
+                });
+            });
+        }
     }
 }

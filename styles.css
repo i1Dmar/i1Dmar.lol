@@ -6,7 +6,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background: url('https://i.ibb.co/tpMT2jP/background.jpg') no-repeat center center fixed; /* الخلفية الجديدة */
+    background: url('https://i.ibb.co/tpMT2jP/background.jpg') no-repeat center center fixed;
     background-size: cover;
     color: #e0e0e0;
     direction: rtl;
@@ -26,7 +26,7 @@ body.white-mode {
 .mode-toggle {
     position: fixed;
     top: 10px;
-    left: 10px; /* الزاوية العلوية اليسرى */
+    left: 10px;
     background-color: #48d9f6;
     color: #fff;
     padding: 8px 20px;
@@ -45,14 +45,14 @@ body.white-mode {
 .site-logo {
     position: fixed;
     top: 10px;
-    right: 10px; /* الزاوية العلوية اليمنى */
+    right: 10px;
     z-index: 1001;
 }
 
 .site-logo img {
     width: 50px;
     height: 50px;
-    border-radius: 50%; /* شكل دائري */
+    border-radius: 50%;
     transition: opacity 0.3s ease;
 }
 
@@ -151,6 +151,46 @@ body.white-mode .transparent-box {
 body.white-mode .transparent-box .section-title {
     color: #333;
     text-shadow: none;
+}
+
+/* تنسيق نموذج تسجيل الدخول */
+#admin-login {
+    text-align: center;
+}
+
+#admin-key {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    color: #fff;
+}
+
+body.white-mode #admin-key {
+    background: rgba(255, 255, 255, 0.8);
+    color: #333;
+    border-color: #999;
+}
+
+#admin-login-btn {
+    padding: 10px 20px;
+    background-color: #48d9f6;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#admin-login-btn:hover {
+    opacity: 0.8;
+}
+
+#admin-error {
+    color: #ff4444;
+    margin-top: 10px;
 }
 
 /* تنسيق الأيقونات */
