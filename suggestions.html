@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المقترحات | i1Dmar</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- شريط التنقل العلوي -->
+    <nav id="top-nav">
+        <a href="index.html" class="nav-btn" style="background-color: #ffffff;">معلومات عني</a>
+        <a href="twitch.html" class="nav-btn">البثوث الحالية</a>
+        <a href="discord.html" class="nav-btn" style="background-color: #1462f3;">سيرفري الديسكورد</a>
+        <a href="suggestions.html" class="nav-btn active" style="background-color: #48d9f6;">مقترحات</a>
+    </nav>
+
+    <!-- قسم المقترحات -->
+    <section id="suggestions" class="section-box">
+        <div class="transparent-box">
+            <h2>مقترحات اضيفها للصفحة</h2>
+            <div class="suggestion-form">
+                <div class="input-box">
+                    <label>اسمك الكريم ❤️</label>
+                    <input type="text" id="suggestion-name" placeholder="اكتب اسمك" maxlength="50">
+                </div>
+                <div class="input-box">
+                    <label>ضع مسمى لاقتراحك</label>
+                    <input type="text" id="suggestion-title" placeholder="عنوان الاقتراح" maxlength="100">
+                </div>
+                <div class="input-box">
+                    <label>اكتب لي ماهو اقتراحك بالتفصيل</label>
+                    <textarea id="suggestion-details" placeholder="اكتب اقتراحك هنا" maxlength="500"></textarea>
+                </div>
+                <button id="submit-suggestion">إرسال الاقتراح</button>
+                <p id="suggestion-message"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- الفوتر -->
+    <footer>
+        <p>.ةظفحم قوقحلا عيمج . i1Dmar 5202 ©</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -8,21 +8,18 @@ body {
     min-height: 100vh;
     background: url('https://i.ibb.co/LX88TWvc/eclipse.jpg') no-repeat center center fixed;
     background-size: cover;
-    color: #e0e0e0; /* نص واضح على الخلفية الداكنة */
+    color: #e0e0e0;
     direction: rtl;
     transition: color 0.3s ease;
 }
 
 body.dark-mode {
-    background-color: #121212;
     color: #ffffff; /* نص أبيض للوضوح */
-    background-blend-mode: overlay; /* يدمج الخلفية مع الصورة */
 }
 
 body.white-mode {
-    background-color: #f0f0f0;
-    color: #333; /* نص داكن للوضوح */
-    background-blend-mode: normal;
+    background-color: rgba(240, 240, 240, 0.8); /* خلفية بيضاء شفافة */
+    color: #333;
 }
 
 /* شريط التنقل العلوي */
@@ -30,7 +27,7 @@ body.white-mode {
     display: flex;
     justify-content: center;
     padding: 10px;
-    background-color: rgba(51, 51, 51, 0.8); /* شفافية مع الخلفية */
+    background-color: rgba(51, 51, 51, 0.9);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -43,7 +40,10 @@ body.white-mode {
     color: #fff;
     border-radius: 5px;
     transition: opacity 0.3s ease;
-    background-color: #ffffff; /* افتراضي لكن يمكن تغييره */
+}
+
+.nav-btn.active {
+    opacity: 0.7; /* تمييز الصفحة الحالية */
 }
 
 .nav-btn:hover {
@@ -64,10 +64,11 @@ body.white-mode .nav-btn {
 .section-box {
     padding: 40px;
     text-align: center;
+    flex-grow: 1; /* يملأ الفراغ في الصفحة */
 }
 
 .transparent-box {
-    background: rgba(0, 0, 0, 0.6); /* خلفية داكنة شفافة */
+    background: rgba(0, 0, 0, 0.7);
     padding: 20px;
     border-radius: 10px;
     max-width: 800px;
@@ -77,7 +78,7 @@ body.white-mode .nav-btn {
 }
 
 body.white-mode .transparent-box {
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.9);
     color: #333;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
@@ -95,11 +96,15 @@ body.white-mode .transparent-box {
 .social-icon img {
     width: 40px;
     height: 40px;
-    fill: #e0e0e0; /* لون واضح في Dark Mode */
+    fill: #ffffff; /* لون أبيض في كل الأوضاع */
+}
+
+body.dark-mode .social-icon img {
+    fill: #ffffff; /* تأكيد اللون الأبيض في Dark Mode */
 }
 
 body.white-mode .social-icon img {
-    fill: #333; /* لون واضح في White Mode */
+    fill: #333; /* لون داكن في White Mode */
 }
 
 .instagram img { fill: #E4405F; }
@@ -203,14 +208,14 @@ body.white-mode #submit-suggestion {
 footer {
     text-align: center;
     padding: 10px;
-    background-color: rgba(51, 51, 51, 0.8);
+    background-color: rgba(51, 51, 51, 0.9);
     color: #fff;
     direction: ltr;
 }
 
 body.white-mode footer {
     color: #333;
-    background-color: rgba(240, 240, 240, 0.8);
+    background-color: rgba(240, 240, 240, 0.9);
 }
 
 /* تحسين للجوال */
