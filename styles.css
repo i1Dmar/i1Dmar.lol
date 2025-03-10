@@ -7,7 +7,7 @@ body {
     flex-direction: column;
     min-height: 100vh;
     background: url('https://i.ibb.co/LX88TWvc/eclipse.jpg') no-repeat center center fixed;
-    background-size: contain;
+    background-size: cover;
     color: #e0e0e0;
     direction: rtl;
     transition: color 0.3s ease;
@@ -83,14 +83,15 @@ body.white-mode .transparent-box {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.transparent-box h2 {
+.transparent-box .section-title { /* تغيير من h2 إلى class section-title */
     color: #ffffff;
     font-size: 28px;
     margin-bottom: 15px;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* زيادة الظل للوضوح */
+    font-weight: 700; /* وزن نص أعلى للتميز */
 }
 
-body.white-mode .transparent-box h2 {
+body.white-mode .transparent-box .section-title {
     color: #333;
     text-shadow: none;
 }
