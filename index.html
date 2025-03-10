@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقعي i1Dmar</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- شريط التفاعلات العلوي -->
+    <div id="top-bar">
+        <div id="user-info">
+            <input type="file" id="upload-image" style="display:none;" />
+            <img id="profile-image" src="default-avatar.png" alt="صورة شخصية" onclick="document.getElementById('upload-image').click()" />
+        </div>
+        <div id="social-links">
+            <a href="https://instagram.com/i1dmar" target="_blank">Instagram</a>
+            <a href="https://youtube.com/i1dmar" target="_blank">YouTube</a>
+            <a href="https://discord.gg/6WVqFCfVcW" target="_blank">Discord</a>
+        </div>
+        <div id="dark-mode-toggle">
+            <button onclick="toggleDarkMode()">الدارك مود</button>
+        </div>
+    </div>
+
+    <!-- اسم الموقع في المنتصف -->
+    <div id="site-name">
+        <h1>i1Dmar</h1>
+    </div>
+
+    <!-- معلومات عني -->
+    <section id="about-me">
+        <h2>عنًي</h2>
+        <p id="bio-content">أهلا انا خالد ملقب بـدمار , انسان فاضي واحب اسوي اللي احبه , مواليد الـ98 , احب استكشف واطور من نفسي بأشياء تفيدني وهذا اول موقع حبيت اسويه كتجربه مبدئيه</p>
+    </section>
+
+    <section id="about-me">
+        <h3>معلومات عني</h3>
+        <p id="bio-content">احب اقضي وقتي غالبا على البي سي والعب مع العيال ومرات ابث على تويتش اقضي باقي يومي فيه واحب ايضا اتعرف على اشخاص جدد وتكوين صداقات تسمر لسنين قناتي تحت تحصلونها</p>
+    </section>
+
+    <!-- تنبيهات Twitch -->
+    <section id="twitch-alerts">
+        <h4>تنبيهات البثوث</h4>
+        <h4>i1Dmar | قناتي في تويتش</h4>
+        <div id="twitch-status">لا يوجد بث حالياً.</div>
+    </section>
+
+    <!-- Footer مع توسيط النص -->
+    <footer>
+        <p>&copy; 2025 i1Dmar. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
