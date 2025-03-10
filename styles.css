@@ -1,15 +1,15 @@
 /* تنسيق الجسم بشكل عام */
 body {
-    font-family: Arial, sans-serif;  
-    margin: 0;  
-    padding: 0;  
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 100vh;
-    background-color: #f0f0f0;  
+    background-color: #f0f0f0;
     color: #333;
-    transition: background-color 0.3s, color 0.3s;  /* إضافة تأثير التغيير السلس */
+    transition: background-color 0.3s, color 0.3s; /* إضافة تأثير التغيير السلس */
 }
 
 /* إضافة تنسيق الوضع الداكن (Dark Mode) */
@@ -27,16 +27,16 @@ body.dark-mode {
     color: white;
 }
 
-#top-bar #social-links a,
 #top-bar #dark-mode-toggle button {
+    background-color: #444;
     color: white;
-    text-decoration: none;
-    margin: 0 10px;
+    border: none;
+    padding: 5px 15px;
+    cursor: pointer;
 }
 
-#top-bar #social-links a:hover,
 #top-bar #dark-mode-toggle button:hover {
-    text-decoration: underline;
+    background-color: #666;
 }
 
 /* توسيط اسم الموقع */
@@ -46,9 +46,39 @@ body.dark-mode {
 }
 
 #site-name h1 {
-    color: #00bcd4;  /* السماوي الفاتح المائل للرصاصي */
+    color: #00bcd4; /* السماوي الفاتح المائل للرصاصي */
     font-size: 36px;
     font-weight: bold;
+}
+
+/* تنسيق روابط التواصل الاجتماعي */
+#social-links {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.social-icon {
+    font-size: 40px;
+    margin: 0 15px;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.social-icon:hover {
+    color: #00bcd4; /* السماوي الفاتح */
+}
+
+/* تخصيص الألوان الخاصة بكل أيقونة */
+.instagram {
+    color: #E4405F;
+}
+
+.youtube {
+    color: #FF0000;
+}
+
+.discord {
+    color: #7289DA;
 }
 
 /* تنسيق الصورة الشخصية داخل دائرة */
@@ -58,10 +88,10 @@ body.dark-mode {
 }
 
 #profile-image {
-    width: 50px; /* يمكنك تغيير الحجم حسب الحاجة */
-    height: 50px; /* تأكد من أن العرض والطول متماثلين للحصول على صورة دائرية */
-    border-radius: 50%; /* يجعل الصورة دائرية */
-    object-fit: cover; /* يضمن أن الصورة ستملأ الدائرة بالكامل */
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
     cursor: pointer;
 }
 
@@ -80,20 +110,33 @@ footer {
     color: white;
 }
 
+/* تنسيق النصوص والصور الخاصة بـ Twitch */
+#twitch-status {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+#twitch-title {
+    font-size: 16px;
+    color: #00bcd4; /* اللون السماوي */
+    margin-top: 5px;
+}
+
+#twitch-game {
+    font-size: 14px;
+    color: #777; /* لون أغمق للعبة */
+    margin-top: 5px;
+}
+
+#twitch-image {
+    margin-top: 10px;
+    width: 400px;
+    height: 225px;
+    object-fit: cover; /* تأكد من أن الصورة تملأ المساحة بشكل مناسب */
+}
+
 footer p {
     margin: 0;
     font-size: 14px;
-}
-
-/* زر الداكن مود */
-#dark-mode-toggle button {
-    background-color: #444;
-    color: white;
-    border: none;
-    padding: 5px 15px;
-    cursor: pointer;
-}
-
-#dark-mode-toggle button:hover {
-    background-color: #666;
 }

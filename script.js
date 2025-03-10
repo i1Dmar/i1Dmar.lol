@@ -31,19 +31,29 @@ document.getElementById('upload-image').addEventListener('change', function(even
 
 // محاكاة تنبيهات Twitch
 setInterval(function() {
-    fetch('https://api.twitch.tv/helix/streams?user_login=your_twitch_username', {
+    fetch('https://api.twitch.tv/helix/streams?user_login=i1Dmar', {
         headers: {
-            'Client-ID': 'your_twitch_client_id',
-            'Authorization': 'Bearer your_oauth_token'
+            'Client-ID': 'f8ukqch3sggujn8co4dnua2tc1ku2a',
+            'Authorization': 'Bearer rraem4oevyma46d3cc7fjro0l9admy'
         }
     })
     .then(response => response.json())
     .then(data => {
         const twitchStatus = document.getElementById('twitch-status');
+        const twitchTitle = document.getElementById('twitch-title');
+        const twitchGame = document.getElementById('twitch-game');
+        const twitchImage = document.getElementById('twitch-image');
+
         if (data.data && data.data.length > 0) {
             twitchStatus.innerHTML = 'البث قيد التشغيل: ' + data.data[0].title;
+            twitchTitle.innerHTML = data.data[0].title;
+            twitchGame.innerHTML = 'اللعبة: ' + data.data[0].game_name;
+            twitchImage.src = data.data[0].thumbnail_url.replace('{width}', '400').replace('{height}', '225'); // تغيير حجم الصورة
         } else {
             twitchStatus.innerHTML = 'لا يوجد بث حالياً.';
+            twitchTitle.innerHTML = '';
+            twitchGame.innerHTML = '';
+            twitchImage.src = ''; // إزالة الصورة في حال عدم وجود بث
         }
     })
     .catch(error => console.error(error));
