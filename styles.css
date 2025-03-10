@@ -6,16 +6,26 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100vh;
+    min-height: 100vh; /* تغيير height إلى min-height عشان المحتوى الكبير ما يخرب */
     background-color: #f0f0f0;
     color: #333;
-    transition: background-color 0.3s, color 0.3s; /* إضافة تأثير التغيير السلس */
+    direction: rtl; /* اتجاه النصوص من اليمين لليسار */
+    transition: background-color 0.3s, color 0.3s;
 }
 
-/* إضافة تنسيق الوضع الداكن (Dark Mode) */
+/* الوضع الداكن */
 body.dark-mode {
     background-color: #121212;
     color: #e0e0e0;
+}
+
+body.dark-mode #top-bar,
+body.dark-mode footer {
+    background-color: #1e1e1e; /* تناسق الألوان في الوضع الداكن */
+}
+
+body.dark-mode .social-icon {
+    color: #e0e0e0; /* لون الأيقونات في الوضع الداكن */
 }
 
 /* شريط التفاعلات العلوي */
@@ -46,7 +56,7 @@ body.dark-mode {
 }
 
 #site-name h1 {
-    color: #00bcd4; /* السماوي الفاتح المائل للرصاصي */
+    color: #00bcd4;
     font-size: 36px;
     font-weight: bold;
 }
@@ -58,30 +68,22 @@ body.dark-mode {
 }
 
 .social-icon {
-    font-size: 40px;
+    font-size: 2rem; /* استخدام rem بدل px عشان تكون نسبية */
     margin: 0 15px;
     color: #333;
     transition: color 0.3s ease;
 }
 
 .social-icon:hover {
-    color: #00bcd4; /* السماوي الفاتح */
+    color: #00bcd4;
 }
 
-/* تخصيص الألوان الخاصة بكل أيقونة */
-.instagram {
-    color: #E4405F;
-}
+/* تخصيص الألوان للأيقونات */
+.instagram { color: #E4405F; }
+.youtube { color: #FF0000; }
+.discord { color: #7289DA; }
 
-.youtube {
-    color: #FF0000;
-}
-
-.discord {
-    color: #7289DA;
-}
-
-/* تنسيق الصورة الشخصية داخل دائرة */
+/* تنسيق الصورة الشخصية */
 #user-info {
     position: relative;
     display: inline-block;
@@ -110,7 +112,7 @@ footer {
     color: white;
 }
 
-/* تنسيق النصوص والصور الخاصة بـ Twitch */
+/* تنسيق Twitch */
 #twitch-status {
     font-size: 18px;
     font-weight: bold;
@@ -119,13 +121,13 @@ footer {
 
 #twitch-title {
     font-size: 16px;
-    color: #00bcd4; /* اللون السماوي */
+    color: #00bcd4;
     margin-top: 5px;
 }
 
 #twitch-game {
     font-size: 14px;
-    color: #777; /* لون أغمق للعبة */
+    color: #777;
     margin-top: 5px;
 }
 
@@ -133,7 +135,32 @@ footer {
     margin-top: 10px;
     width: 400px;
     height: 225px;
-    object-fit: cover; /* تأكد من أن الصورة تملأ المساحة بشكل مناسب */
+    object-fit: cover;
+    display: block; /* افتراضي ظاهر */
+}
+
+/* إخفاء الصورة لو ما في بث */
+#twitch-image:empty {
+    display: none; /* لكن ده ما رح يشتغل مع img، نعتمد على JS هنا */
+}
+
+/* تحسين التصميم للجوال */
+@media (max-width: 600px) {
+    #site-name h1 {
+        font-size: 24px;
+    }
+    .social-icon {
+        font-size: 1.5rem;
+        margin: 0 10px;
+    }
+    #twitch-image {
+        width: 100%;
+        height: auto;
+    }
+    #top-bar {
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 footer p {
