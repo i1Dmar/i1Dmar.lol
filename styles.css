@@ -7,18 +7,18 @@ body {
     flex-direction: column;
     min-height: 100vh;
     background: url('https://i.ibb.co/LX88TWvc/eclipse.jpg') no-repeat center center fixed;
-    background-size: cover;
+    background-size: contain;
     color: #e0e0e0;
     direction: rtl;
     transition: color 0.3s ease;
 }
 
 body.dark-mode {
-    color: #ffffff; /* نص أبيض للوضوح */
+    color: #ffffff;
 }
 
 body.white-mode {
-    background-color: rgba(240, 240, 240, 0.8); /* خلفية بيضاء شفافة */
+    background-color: rgba(240, 240, 240, 0.9);
     color: #333;
 }
 
@@ -43,7 +43,7 @@ body.white-mode {
 }
 
 .nav-btn.active {
-    opacity: 0.7; /* تمييز الصفحة الحالية */
+    opacity: 0.7;
 }
 
 .nav-btn:hover {
@@ -64,7 +64,7 @@ body.white-mode .nav-btn {
 .section-box {
     padding: 40px;
     text-align: center;
-    flex-grow: 1; /* يملأ الفراغ في الصفحة */
+    flex-grow: 1;
 }
 
 .transparent-box {
@@ -83,6 +83,18 @@ body.white-mode .transparent-box {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
+.transparent-box h2 {
+    color: #ffffff;
+    font-size: 28px;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+body.white-mode .transparent-box h2 {
+    color: #333;
+    text-shadow: none;
+}
+
 /* تنسيق الأيقونات */
 #social-links {
     margin-top: 20px;
@@ -96,20 +108,20 @@ body.white-mode .transparent-box {
 .social-icon img {
     width: 40px;
     height: 40px;
-    fill: #ffffff; /* لون أبيض في كل الأوضاع */
+    fill: currentColor;
 }
 
-body.dark-mode .social-icon img {
-    fill: #ffffff; /* تأكيد اللون الأبيض في Dark Mode */
+body.dark-mode .social-icon {
+    color: #ffffff;
 }
 
-body.white-mode .social-icon img {
-    fill: #333; /* لون داكن في White Mode */
+body.white-mode .social-icon {
+    color: #333;
 }
 
-.instagram img { fill: #E4405F; }
-.youtube img { fill: #FF0000; }
-.discord img { fill: #7289DA; }
+.instagram { color: #E4405F; }
+.discord { color: #7289DA; }
+.youtube { color: #FF0000; }
 
 .social-icon:hover {
     opacity: 0.8;
@@ -216,6 +228,11 @@ footer {
 body.white-mode footer {
     color: #333;
     background-color: rgba(240, 240, 240, 0.9);
+}
+
+footer p {
+    margin: 0;
+    font-size: 14px;
 }
 
 /* تحسين للجوال */

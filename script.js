@@ -71,7 +71,7 @@ if (document.getElementById('discord-online')) {
         .then(response => response.json())
         .then(data => {
             document.getElementById('discord-online').innerHTML = data.approximate_presence_count || 'غير متاح';
-            document.getElementById('discord-voice').innerHTML = 'تحت التطوير'; // تحتاج API إضافي
+            document.getElementById('discord-voice').innerHTML = 'تحت التطوير';
         })
         .catch(error => {
             console.error('خطأ Discord:', error);
