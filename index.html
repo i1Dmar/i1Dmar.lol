@@ -7,7 +7,37 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="https://i.ibb.co/v487RCS6/image-23.jpg">
+    <!-- إضافة Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
+
+        // تهيئة Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyDNfa3sOOL5kV7cBchrpkMJNs9HmRl3TnA",
+            authDomain: "i1-web.firebaseapp.com",
+            projectId: "i1-web",
+            storageBucket: "i1-web.firebasestorage.app",
+            messagingSenderId: "234165099932",
+            appId: "1:234165099932:web:96563abeb195edf51c7c59",
+            databaseURL: "https://i1-web-default-rtdb.firebaseio.com" // أضفت الـ databaseURL
+        };
+
+        // تهيئة Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // نعرّف الدوال عشان نستخدمها في script.js
+        window.firebaseFunctions = {
+            getDatabase: () => database,
+            ref: (path) => ref(database, path),
+            set: set,
+            onValue: onValue
+        };
+    </script>
 </head>
+</body>
+</html>
 <body>
     <!-- تنبيه في الأعلى -->
     <div id="site-notice" class="site-notice">

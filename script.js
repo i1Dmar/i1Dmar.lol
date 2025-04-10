@@ -1,3 +1,42 @@
+// دالة لتوليد معرف فريد لكل زائر (باستخدام localStorage)
+function getVisitorId() {
+    let visitorId = localStorage.getItem('visitorId');
+    if (!visitorId) {
+        visitorId = 'visitor_' + Math.random().toString(36).substr(2, 9);
+        localStorage.setItem('visitorId', visitorId);
+    }
+    return visitorId;
+}
+
+// دالة لتحديث عدد الزوار
+function updateVisitorCount() {
+    const visitorId = getVisitorId();
+    const { getDatabase, ref, set, onValue } = window.firebaseFunctions;
+    const visitorsRef = ref('visitors');
+    const visitorCountElement = document.getElementById('visitor-count');
+
+    // تحقق إذا كان الزائر موجود مسبقًا
+    onValue(ref(`visitors/${visitorId}`), (snapshot) => {
+        if (!snapshot.exists()) {
+            // إذا الزائر جديد، أضفه لقاعدة البيانات
+            set(ref(`visitors/${visitorId}`), {
+                timestamp: Date.now()
+            });
+        }
+    }, { onlyOnce: true });
+
+    // احسب عدد الزوار الكلي
+    onValue(visitorsRef, (snapshot) => {
+        const visitorCount = snapshot.val() ? Object.keys(snapshot.val()).length : 0;
+        if (visitorCountElement) {
+            visitorCountElement.innerHTML = `عدد الزوار: ${visitorCount}`;
+        }
+    });
+}
+
+// شغّل الدالة عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', updateVisitorCount);
+
 // المقترحات
 if (document.getElementById('submit-suggestion')) {
     document.getElementById('submit-suggestion').addEventListener('click', function(e) {
@@ -117,18 +156,6 @@ function loadSuggestions() {
         });
     }
 }
-
-// عداد الزوار
-function updateVisitorCount() {
-    let visitors = parseInt(localStorage.getItem('visitorCount')) || 0;
-    visitors += 1;
-    localStorage.setItem('visitorCount', visitors);
-    const visitorCountElement = document.getElementById('visitor-count');
-    if (visitorCountElement) {
-        visitorCountElement.innerHTML = `عدد الزوار: ${visitors}`;
-    }
-}
-document.addEventListener('DOMContentLoaded', updateVisitorCount);
 
 // اللعبة
 if (document.getElementById('start-game')) {
