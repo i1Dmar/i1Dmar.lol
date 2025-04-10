@@ -6,12 +6,20 @@
     <title>الإدارة | i1Dmar</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="https://i.ibb.co/ds9fRp8X/1307117245096267867.png">
+    <link rel="icon" type="image/png" href="https://i.ibb.co/v487RCS6/image-23.jpg">
 </head>
 <body>
+    <!-- تنبيه في الأعلى -->
+    <div id="site-notice" class="site-notice">
+        <p>صفحة البثوث قيد التطوير، ترقبوا التحديثات قريبًا! 🚀</p>
+    </div>
+
+    <!-- زر تبديل الثيم -->
+    <button id="theme-toggle" class="theme-toggle">تبديل الثيم 🌙</button>
+
     <!-- لوقو الموقع -->
     <a href="index.html" class="site-logo">
-        <img src="https://i.ibb.co/ds9fRp8X/1307117245096267867.png" alt="i1Dmar Logo">
+        <img src="https://i.ibb.co/v487RCS6/image-23.jpg" alt="i1Dmar Logo" loading="lazy">
     </a>
 
     <!-- شريط التنقل العلوي -->
@@ -40,6 +48,8 @@
             <!-- محتوى الإدارة -->
             <div id="admin-content" style="display: none;">
                 <h2 class="section-title">الإدارة - الاقتراحات</h2>
+                <button id="admin-logout">تسجيل الخروج</button>
+                <p id="suggestions-stats"></p>
                 <div id="suggestions-list"></div>
             </div>
         </div>
@@ -48,6 +58,7 @@
     <!-- الفوتر -->
     <footer>
         <p>© 2025 i1Dmar | جميع الحقوق محفوظة</p>
+        <p id="visitor-count">عدد الزوار: جاري التحميل...</p>
     </footer>
 
     <script src="script.js"></script>

@@ -6,12 +6,20 @@
     <title>معلومات عني | i1Dmar</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="https://i.ibb.co/ds9fRp8X/1307117245096267867.png">
+    <link rel="icon" type="image/png" href="https://i.ibb.co/v487RCS6/image-23.jpg">
 </head>
 <body>
+    <!-- تنبيه في الأعلى -->
+    <div id="site-notice" class="site-notice">
+        <p>صفحة البثوث قيد التطوير، ترقبوا التحديثات قريبًا! 🚀</p>
+    </div>
+
+    <!-- زر تبديل الثيم -->
+    <button id="theme-toggle" class="theme-toggle">تبديل الثيم 🌙</button>
+
     <!-- لوقو الموقع -->
     <a href="index.html" class="site-logo">
-        <img src="https://i.ibb.co/ds9fRp8X/1307117245096267867.png" alt="i1Dmar Logo">
+        <img src="https://i.ibb.co/v487RCS6/image-23.jpg" alt="i1Dmar Logo" loading="lazy">
     </a>
 
     <!-- شريط التنقل العلوي -->
@@ -27,30 +35,43 @@
     <section id="about-me" class="section-box">
         <div class="transparent-box">
             <h2 class="section-title">معلومات عني</h2>
-            <p>أهلاً نورت الصفحة ❤️</p>
-            <p>أنا خالد يلقبوني بـ"دمار"، إنسان فاضي وأحب أسوي اللي أحبه. مواليد 98، أحب أستكشف وأطور من نفسي بأشياء تفيدني، وهذا أول موقع حبيت أسويه كتجربة مبدئية.</p>
-            <p>أحب أقضي وقتي غالبًا على البي سي وأجلس مع العيال ومرات أبث في تويتش، وعلى برامج التواصل اشغل نفسي فيه.</p>
-            <p>قناتي على تويتش تحصلونها تحت، وحياكم الله وقت أبث تنوروني وتسعدوني ❤️</p>
+            <p>أنا ضمار، عمري 26 سنة، أحب ألعب ألعاب الفيديو وأشارككم مغامراتي على تويتش.</p>
+            <p>كل فترة بنزل فيديوهات على يوتيوب، وأسوي بثوث على تويتش. إذا تبي تنضم لسيرفر الديسكورد، تلقى الرابط تحت.</p>
+            <p>إذا عندك أي اقتراح لتحسين الصفحة أو المحتوى، لا تتردد وارسله في صفحة المقترحات!</p>
             <div id="social-links">
                 <a href="https://instagram.com/i1dmar" target="_blank" class="social-icon instagram">
-                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg" alt="Instagram" />
+                    <img src="https://cdn2.iconfinder.com/data/icons/social-icons-33/128/Instagram-512.png" alt="Instagram" loading="lazy">
                 </a>
                 <a href="https://discord.gg/6WVqFCfVcW" target="_blank" class="social-icon discord">
-                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/discord.svg" alt="Discord" />
+                    <img src="https://cdn2.iconfinder.com/data/icons/social-icons-33/128/Discord-512.png" alt="Discord" loading="lazy">
                 </a>
-                <a href="https://youtube.com/i1dmar" target="_blank" class="social-icon youtube">
-                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/youtube.svg" alt="YouTube" />
+                <a href="https://youtube.com/@i1dmar" target="_blank" class="social-icon youtube">
+                    <img src="https://cdn2.iconfinder.com/data/icons/social-icons-33/128/Youtube-512.png" alt="YouTube" loading="lazy">
                 </a>
-                <a href="https://www.twitch.tv/i1dmar" target="_blank" class="social-icon twitch">
-                    <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/twitch.svg" alt="Twitch" />
+                <a href="https://twitch.tv/i1dmar" target="_blank" class="social-icon twitch">
+                    <img src="https://cdn2.iconfinder.com/data/icons/social-icons-33/128/Twitch-512.png" alt="Twitch" loading="lazy">
                 </a>
             </div>
+        </div>
+    </section>
+
+    <!-- قسم اللعبة -->
+    <section id="game" class="section-box">
+        <div class="transparent-box">
+            <h2 class="section-title">لعبة صغيرة: اضغط على الهدف!</h2>
+            <p>حاول تضغط على الهدف أكثر مرات ممكن في 30 ثانية!</p>
+            <div id="game-area">
+                <div id="target"></div>
+            </div>
+            <p>النقاط: <span id="score">0</span></p>
+            <button id="start-game">ابدأ اللعبة</button>
         </div>
     </section>
 
     <!-- الفوتر -->
     <footer>
         <p>© 2025 i1Dmar | جميع الحقوق محفوظة</p>
+        <p id="visitor-count">عدد الزوار: جاري التحميل...</p>
     </footer>
 
     <script src="script.js"></script>

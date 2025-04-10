@@ -1,67 +1,4 @@
-// Twitch API (فقط في صفحة twitch.html)
-if (document.getElementById('twitch-status')) {
-    function fetchTwitchData() {
-        fetch('https://api.twitch.tv/helix/streams?user_login=i1dmar', {
-            headers: {
-                'Client-ID': 'f8ukqch3sggujn8co4dnua2tc1ku2a',
-                'Authorization': 'Bearer rraem4oevyma46d3cc7fjro0l9admy'
-            }
-        })
-        .then(response => response.ok ? response.json() : Promise.reject('خطأ في الـ API'))
-        .then(data => {
-            const twitchStatus = document.getElementById('twitch-status');
-            const twitchTitle = document.getElementById('twitch-title');
-            const twitchGame = document.getElementById('twitch-game');
-            const twitchImage = document.getElementById('twitch-image');
-
-            if (data.data && data.data.length > 0) {
-                twitchStatus.innerHTML = 'البث شغال الآن';
-                twitchTitle.innerHTML = 'العنوان: ' + data.data[0].title;
-                twitchGame.innerHTML = 'اللعبة: ' + data.data[0].game_name;
-                twitchImage.src = data.data[0].thumbnail_url.replace('{width}', '400').replace('{height}', '225');
-                twitchImage.style.display = 'block';
-            } else {
-                twitchStatus.innerHTML = 'البث متوقف حاليًا';
-                twitchTitle.innerHTML = '';
-                twitchGame.innerHTML = '';
-                twitchImage.src = 'https://i.ibb.co/twFxqzXM/21.png';
-                twitchImage.style.display = 'block';
-            }
-        })
-        .catch(error => {
-            console.error('خطأ:', error);
-            document.getElementById('twitch-status').innerHTML = 'خطأ في جلب بيانات Twitch';
-            document.getElementById('twitch-image').src = 'https://i.ibb.co/twFxqzXM/21.png';
-        });
-    }
-
-    fetchTwitchData();
-    setInterval(fetchTwitchData, 30000);
-}
-
-// Discord API (فقط في صفحة discord.html)
-if (document.getElementById('discord-online')) {
-    function fetchDiscordData() {
-        fetch('https://discord.com/api/v10/invites/6WVqFCfVcW?with_counts=true', {
-            headers: {
-                'Authorization': 'Bot YOUR_BOT_TOKEN_HERE'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('discord-online').innerHTML = data.approximate_presence_count || 'غير متاح';
-            document.getElementById('discord-voice').innerHTML = 'تحت التطوير';
-        })
-        .catch(error => {
-            console.error('خطأ Discord:', error);
-            document.getElementById('discord-online').innerHTML = 'غير متاح';
-        });
-    }
-
-    fetchDiscordData();
-}
-
-// المقترحات (يخزن في localStorage)
+// المقترحات
 if (document.getElementById('submit-suggestion')) {
     document.getElementById('submit-suggestion').addEventListener('click', function(e) {
         e.preventDefault();
@@ -71,6 +8,7 @@ if (document.getElementById('submit-suggestion')) {
         const message = document.getElementById('suggestion-message');
 
         if (!name || !title || !details) {
+            message.classList.add('error');
             message.innerHTML = 'يرجى ملء جميع الحقول!';
             return;
         }
@@ -79,83 +17,171 @@ if (document.getElementById('submit-suggestion')) {
         const now = new Date().toDateString();
 
         if (lastSubmit === now) {
+            message.classList.add('error');
             message.innerHTML = 'لقد قدمت اقتراحًا اليوم، جرب غدًا!';
             return;
         }
 
         let suggestions = JSON.parse(localStorage.getItem('suggestions')) || [];
+        if (suggestions.length >= 100) {
+            message.classList.add('error');
+            message.innerHTML = 'تم الوصول للحد الأقصى للاقتراحات!';
+            return;
+        }
+
         suggestions.push({ name, title, details, date: new Date().toLocaleString() });
         localStorage.setItem('suggestions', JSON.stringify(suggestions));
+        localStorage.setItem(`suggestion_${name}`, now);
 
-        message.innerHTML = 'تم إرسال الاقتراح بنجاح! يمكنك رؤيته في صفحة الإدارة.';
+        message.classList.remove('error');
+        message.innerHTML = `شكرًا يا ${name} على اقتراحك! يمكنك رؤيته في صفحة الإدارة.`;
+        setTimeout(() => message.innerHTML = '', 5000);
+
         document.getElementById('suggestion-name').value = '';
         document.getElementById('suggestion-title').value = '';
         document.getElementById('suggestion-details').value = '';
     });
+
+    document.getElementById('clear-suggestion').addEventListener('click', () => {
+        document.getElementById('suggestion-name').value = '';
+        document.getElementById('suggestion-title').value = '';
+        document.getElementById('suggestion-details').value = '';
+        document.getElementById('suggestion-message').innerHTML = '';
+    });
 }
 
-// التحقق من الدخول لصفحة الإدارة
+// الإدارة
 if (document.getElementById('admin')) {
-    const adminLogin = document.getElementById('admin-login');
-    const adminContent = document.getElementById('admin-content');
-    const adminKeyInput = document.getElementById('admin-key');
-    const adminLoginBtn = document.getElementById('admin-login-btn');
-    const adminError = document.getElementById('admin-error');
-    const secretKey = 'i1Dmari1998';
-
-    const isLoggedIn = localStorage.getItem('adminLoggedIn');
-
-    if (isLoggedIn === 'true') {
-        adminLogin.style.display = 'none';
-        adminContent.style.display = 'block';
+    if (localStorage.getItem('adminLoggedIn') === 'true') {
+        document.getElementById('admin-login').style.display = 'none';
+        document.getElementById('admin-content').style.display = 'block';
         loadSuggestions();
     } else {
-        adminLogin.style.display = 'block';
-        adminContent.style.display = 'none';
+        document.getElementById('admin-login').style.display = 'block';
+        document.getElementById('admin-content').style.display = 'none';
     }
 
-    adminLoginBtn.addEventListener('click', function() {
-        const enteredKey = adminKeyInput.value.trim();
-        if (enteredKey === secretKey) {
+    document.getElementById('admin-login-btn').addEventListener('click', function() {
+        const key = document.getElementById('admin-key').value;
+        const error = document.getElementById('admin-error');
+        if (key === 'i1Dmari1998') {
             localStorage.setItem('adminLoggedIn', 'true');
-            adminLogin.style.display = 'none';
-            adminContent.style.display = 'block';
+            document.getElementById('admin-login').style.display = 'none';
+            document.getElementById('admin-content').style.display = 'block';
             loadSuggestions();
         } else {
-            adminError.innerHTML = 'المفتاح السري غير صحيح!';
+            error.innerHTML = 'المفتاح السري غير صحيح!';
         }
     });
 
-    function loadSuggestions() {
-        const suggestions = JSON.parse(localStorage.getItem('suggestions')) || [];
-        const suggestionsList = document.getElementById('suggestions-list');
+    document.getElementById('admin-logout')?.addEventListener('click', () => {
+        localStorage.removeItem('adminLoggedIn');
+        location.reload();
+    });
+}
 
-        if (suggestions.length === 0) {
-            suggestionsList.innerHTML = '<p>لا يوجد اقتراحات بعد.</p>';
-        } else {
-            suggestions.forEach((suggestion, index) => {
-                const suggestionBox = document.createElement('div');
-                suggestionBox.className = 'suggestion-box';
-                suggestionBox.innerHTML = `
-                    <div class="suggestion-item"><strong>اسم الشخص المرسل:</strong> ${suggestion.name}</div>
-                    <div class="suggestion-item"><strong>الموضوع:</strong> ${suggestion.title}</div>
-                    <div class="suggestion-item"><strong>اقتراحه:</strong> ${suggestion.details}</div>
-                    <div class="suggestion-item"><strong>التاريخ:</strong> ${suggestion.date}</div>
-                    <button class="delete-btn" data-index="${index}">حذف الاقتراح</button>
-                    <hr>
-                `;
-                suggestionsList.appendChild(suggestionBox);
-            });
+function loadSuggestions() {
+    const suggestions = JSON.parse(localStorage.getItem('suggestions')) || [];
+    const suggestionsList = document.getElementById('suggestions-list');
+    const statsElement = document.getElementById('suggestions-stats');
 
-            document.querySelectorAll('.delete-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    const index = this.getAttribute('data-index');
-                    let suggestions = JSON.parse(localStorage.getItem('suggestions')) || [];
-                    suggestions.splice(index, 1);
-                    localStorage.setItem('suggestions', JSON.stringify(suggestions));
-                    location.reload();
-                });
+    if (suggestions.length === 0) {
+        suggestionsList.innerHTML = '<p>لا يوجد اقتراحات بعد.</p>';
+        statsElement.innerHTML = 'الإحصائيات: لا يوجد اقتراحات';
+    } else {
+        const uniqueUsers = [...new Set(suggestions.map(s => s.name))].length;
+        statsElement.innerHTML = `الإحصائيات: ${suggestions.length} اقتراحات من ${uniqueUsers} أشخاص`;
+        suggestionsList.innerHTML = '';
+        suggestions.forEach((suggestion, index) => {
+            const suggestionBox = document.createElement('div');
+            suggestionBox.className = 'suggestion-box';
+            suggestionBox.innerHTML = `
+                <div class="suggestion-item"><strong>اسم الشخص المرسل:</strong> ${suggestion.name}</div>
+                <div class="suggestion-item"><strong>الموضوع:</strong> ${suggestion.title}</div>
+                <div class="suggestion-item"><strong>اقتراحه:</strong> ${suggestion.details}</div>
+                <div class="suggestion-item"><strong>التاريخ:</strong> ${suggestion.date}</div>
+                <button class="delete-btn" data-index="${index}">حذف الاقتراح</button>
+                <hr>
+            `;
+            suggestionsList.appendChild(suggestionBox);
+        });
+
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const index = this.getAttribute('data-index');
+                let suggestions = JSON.parse(localStorage.getItem('suggestions')) || [];
+                suggestions.splice(index, 1);
+                localStorage.setItem('suggestions', JSON.stringify(suggestions));
+                location.reload();
             });
+        });
+    }
+}
+
+// عداد الزوار
+function updateVisitorCount() {
+    let visitors = parseInt(localStorage.getItem('visitorCount')) || 0;
+    visitors += 1;
+    localStorage.setItem('visitorCount', visitors);
+    const visitorCountElement = document.getElementById('visitor-count');
+    if (visitorCountElement) {
+        visitorCountElement.innerHTML = `عدد الزوار: ${visitors}`;
+    }
+}
+document.addEventListener('DOMContentLoaded', updateVisitorCount);
+
+// اللعبة
+if (document.getElementById('start-game')) {
+    const startButton = document.getElementById('start-game');
+    const target = document.getElementById('target');
+    const scoreDisplay = document.getElementById('score');
+    const gameArea = document.getElementById('game-area');
+    let score = 0;
+    let gameActive = false;
+
+    startButton.addEventListener('click', () => {
+        if (!gameActive) {
+            gameActive = true;
+            score = 0;
+            scoreDisplay.innerHTML = score;
+            startButton.innerHTML = 'جاري اللعب...';
+            moveTarget();
+            setTimeout(() => {
+                gameActive = false;
+                startButton.innerHTML = 'ابدأ اللعبة';
+                alert(`انتهت اللعبة! نقاطك: ${score}`);
+            }, 30000);
         }
+    });
+
+    target.addEventListener('click', () => {
+        if (gameActive) {
+            score++;
+            scoreDisplay.innerHTML = score;
+            moveTarget();
+        }
+    });
+
+    function moveTarget() {
+        const maxX = gameArea.offsetWidth - target.offsetWidth;
+        const maxY = gameArea.offsetHeight - target.offsetHeight;
+        const newX = Math.random() * maxX;
+        const newY = Math.random() * maxY;
+        target.style.left = `${newX}px`;
+        target.style.top = `${newY}px`;
+    }
+}
+
+// الثيم الغامق
+const themeToggle = document.getElementById('theme-toggle');
+if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        themeToggle.innerHTML = document.body.classList.contains('dark-mode') ? 'تبديل الثيم ☀️' : 'تبديل الثيم 🌙';
+    });
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-mode');
+        themeToggle.innerHTML = 'تبديل الثيم ☀️';
     }
 }

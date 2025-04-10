@@ -6,11 +6,18 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background: url('https://i.ibb.co/zVhT29H9/ae477c644b8b9649e44d780ce1bc5b1b.jpg') no-repeat center center fixed;
-    background-size: cover;
+    background: linear-gradient(45deg, #1462f3, #48d9f6, #6441a5);
+    background-size: 200% 200%;
+    animation: gradient 15s ease infinite;
     color: #333;
     direction: rtl;
     position: relative;
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 /* إضافة طبقة تعتيم للخلفية */
@@ -21,8 +28,46 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.5);
     z-index: -1;
+}
+
+/* تنبيه الموقع */
+.site-notice {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffcc00;
+    color: #333;
+    text-align: center;
+    padding: 10px;
+    z-index: 1002;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.site-notice p {
+    margin: 0;
+    font-size: 16px;
+}
+
+/* زر تبديل الثيم */
+.theme-toggle {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    padding: 8px 15px;
+    background-color: #48d9f6;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1001;
+    transition: opacity 0.3s ease;
+}
+
+.theme-toggle:hover {
+    opacity: 0.8;
 }
 
 /* لوقو الموقع */
@@ -51,7 +96,7 @@ body::before {
     padding: 10px;
     background-color: rgba(240, 240, 240, 0.9);
     position: sticky;
-    top: 0;
+    top: 40px; /* لتجنب التداخل مع التنبيه */
     z-index: 1000;
 }
 
@@ -62,7 +107,7 @@ body::before {
     color: #333;
     background-color: #ddd;
     border-radius: 5px;
-    transition: opacity 0.3s ease;
+    transition: transform 0.2s ease, opacity 0.3s ease;
 }
 
 .nav-btn.active {
@@ -70,7 +115,12 @@ body::before {
 }
 
 .nav-btn:hover {
+    transform: scale(1.05);
     opacity: 0.8;
+}
+
+.nav-btn:active {
+    transform: scale(0.95);
 }
 
 /* تنسيق زر الإدارة */
@@ -81,15 +131,20 @@ body::before {
     color: #fff;
     background-color: #fa5659;
     border-radius: 5px;
-    transition: opacity 0.3s ease;
+    transition: transform 0.2s ease, opacity 0.3s ease;
 }
 
 .admin-btn:hover {
+    transform: scale(1.05);
     opacity: 0.8;
 }
 
 .admin-btn.active {
     opacity: 0.7;
+}
+
+.admin-btn:active {
+    transform: scale(0.95);
 }
 
 /* تنسيق الأقسام */
@@ -100,14 +155,20 @@ body::before {
 }
 
 .transparent-box {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     padding: 20px;
     border-radius: 10px;
     max-width: 800px;
     margin: 0 auto;
-    backdrop-filter: blur(5px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     color: #333;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .transparent-box .section-title {
@@ -145,15 +206,35 @@ body::before {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.3s ease;
 }
 
 #admin-login-btn:hover {
+    transform: scale(1.05);
     opacity: 0.8;
+}
+
+#admin-login-btn:active {
+    transform: scale(0.95);
 }
 
 #admin-error {
     color: #ff4444;
     margin-top: 10px;
+}
+
+#admin-logout {
+    padding: 8px 15px;
+    background-color: #ff4444;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+#admin-logout:hover {
+    background-color: #cc0000;
 }
 
 /* تنسيق الأيقونات */
@@ -163,13 +244,12 @@ body::before {
 
 .social-icon {
     margin: 0 15px;
-    transition: opacity 0.3s ease;
+    transition: transform 0.3s ease;
 }
 
 .social-icon img {
     width: 40px;
     height: 40px;
-    fill: currentColor;
 }
 
 .social-icon {
@@ -182,23 +262,28 @@ body::before {
 .twitch { color: #6441A5; }
 
 .social-icon:hover {
-    opacity: 0.8;
+    transform: scale(1.2);
 }
 
 /* تنسيق Twitch */
-#twitch-image {
-    width: 400px;
-    height: 225px;
-    object-fit: cover;
-    margin-top: 10px;
+.twitch-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #6441a5;
+    color: #fff;
+    text-decoration: none;
     border-radius: 5px;
-    border: 2px solid #48d9f6;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    margin-top: 10px;
+    transition: transform 0.2s ease, opacity 0.3s ease;
 }
 
-#twitch-status, #twitch-title, #twitch-game {
-    margin: 5px 0;
-    color: #333;
+.twitch-link:hover {
+    transform: scale(1.05);
+    opacity: 0.8;
+}
+
+.twitch-link:active {
+    transform: scale(0.95);
 }
 
 /* تنسيق Discord */
@@ -210,10 +295,16 @@ body::before {
     text-decoration: none;
     border-radius: 5px;
     margin-top: 10px;
+    transition: transform 0.2s ease, opacity 0.3s ease;
 }
 
 .discord-join:hover {
+    transform: scale(1.05);
     opacity: 0.8;
+}
+
+.discord-join:active {
+    transform: scale(0.95);
 }
 
 /* تنسيق المقترحات */
@@ -222,7 +313,7 @@ body::before {
 }
 
 .input-box {
-    margin: 15px 0;
+    margin: 20px 0;
 }
 
 .input-box label {
@@ -234,7 +325,7 @@ body::before {
 .input-box input, .input-box textarea {
     width: 100%;
     max-width: 500px;
-    padding: 10px;
+    padding: 12px;
     border: 1px solid #999;
     border-radius: 5px;
     background: rgba(255, 255, 255, 0.8);
@@ -248,10 +339,40 @@ body::before {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.3s ease;
 }
 
 #submit-suggestion:hover {
+    transform: scale(1.05);
     opacity: 0.8;
+}
+
+#submit-suggestion:active {
+    transform: scale(0.95);
+}
+
+#clear-suggestion {
+    padding: 10px 20px;
+    background-color: #ff4444;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: transform 0.2s ease, opacity 0.3s ease;
+}
+
+#clear-suggestion:hover {
+    transform: scale(1.05);
+    opacity: 0.8;
+}
+
+#clear-suggestion:active {
+    transform: scale(0.95);
+}
+
+#suggestion-message.error {
+    color: #ff4444;
 }
 
 /* تنسيق الاقتراحات في صفحة الإدارة */
@@ -273,6 +394,12 @@ body::before {
     color: #1462f3;
 }
 
+#suggestions-stats {
+    margin: 10px 0;
+    color: #1462f3;
+    font-weight: 700;
+}
+
 /* تنسيق زر الحذف */
 .delete-btn {
     margin-top: 10px;
@@ -289,6 +416,46 @@ body::before {
     background-color: #cc0000;
 }
 
+/* تنسيق اللعبة */
+#game-area {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#target {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: #48d9f6;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#start-game {
+    padding: 10px 20px;
+    background-color: #1462f3;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: transform 0.2s ease, opacity 0.3s ease;
+}
+
+#start-game:hover {
+    transform: scale(1.05);
+    opacity: 0.8;
+}
+
+#start-game:active {
+    transform: scale(0.95);
+}
+
 /* تنسيق الفوتر */
 footer {
     text-align: center;
@@ -303,24 +470,106 @@ footer p {
     font-size: 14px;
 }
 
+#visitor-count {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #48d9f6;
+}
+
+/* تنسيق الثيم الغامق */
+.dark-mode .transparent-box {
+    background: rgba(30, 30, 30, 0.95);
+    color: #ddd;
+}
+
+.dark-mode .section-title,
+.dark-mode .transparent-box p,
+.dark-mode .suggestion-item {
+    color: #ddd;
+}
+
+.dark-mode .suggestion-item strong {
+    color: #48d9f6;
+}
+
+.dark-mode body::before {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.dark-mode footer {
+    background-color: rgba(30, 30, 30, 0.9);
+    color: #ddd;
+}
+
+.dark-mode #top-nav {
+    background-color: rgba(50, 50, 50, 0.9);
+}
+
+.dark-mode .nav-btn {
+    background-color: #555;
+    color: #ddd;
+}
+
+.dark-mode .input-box input,
+.dark-mode .input-box textarea {
+    background: rgba(50, 50, 50, 0.8);
+    color: #ddd;
+    border-color: #777;
+}
+
+.dark-mode .site-notice {
+    background-color: #cc9900;
+    color: #ddd;
+}
+
 /* تحسين للجوال */
 @media (max-width: 600px) {
     #top-nav {
         flex-direction: column;
         align-items: center;
+        padding: 5px;
     }
     .nav-btn, .admin-btn {
         margin: 5px 0;
+        width: 90%;
+        text-align: center;
     }
     .transparent-box {
+        margin: 0 10px;
+        width: calc(100% - 20px);
         padding: 15px;
     }
-    #twitch-image {
-        width: 100%;
-        height: auto;
+    .section-title {
+        font-size: 22px;
     }
     .site-logo img {
         width: 40px;
         height: 40px;
+    }
+    .input-box input, .input-box textarea {
+        width: 100%;
+    }
+    .social-icon img {
+        width: 35px;
+        height: 35px;
+    }
+    #game-area {
+        height: 200px;
+    }
+    #target {
+        width: 30px;
+        height: 30px;
+    }
+    .site-notice p {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 400px) {
+    .section-title {
+        font-size: 20px;
+    }
+    .transparent-box {
+        padding: 10px;
     }
 }
