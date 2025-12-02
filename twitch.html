@@ -1,56 +1,108 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>البثوث الحالية | i1Dmar</title>
+    <title>🎮 بث مباشر | i1Dmar</title>
+
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="https://i.ibb.co/v487RCS6/image-23.jpg">
-    <!-- إضافة Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+    <!-- Twitch Embeds -->
+    <script src="https://embed.twitch.tv/embed/v1.js"></script>
+
 </head>
-</head>
+
 <body>
-    <!-- تنبيه في الأعلى -->
-    <div id="site-notice" class="site-notice">
-        <p>صفحة البثوث قيد التطوير، ترقبوا التحديثات قريبًا! 🚀</p>
-    </div>
 
-    <!-- زر تبديل الثيم -->
-    <button id="theme-toggle" class="theme-toggle">تبديل الثيم 🌙</button>
-
-    <!-- لوقو الموقع -->
+    <!-- شعار -->
     <a href="index.html" class="site-logo">
-        <img src="https://i.ibb.co/v487RCS6/image-23.jpg" alt="i1Dmar Logo" loading="lazy">
+        <img src="https://i.ibb.co/v487RCS6/image-23.jpg" alt="i1Dmar Logo">
     </a>
 
-    <!-- شريط التنقل العلوي -->
+    <!-- شريط تنقل -->
     <nav id="top-nav">
-        <a href="index.html" class="nav-btn" style="background-color: #ffffff;">معلومات عني</a>
-        <a href="twitch.html" class="nav-btn active">البثوث الحالية</a>
-        <a href="discord.html" class="nav-btn" style="background-color: #1462f3;">سيرفري الديسكورد</a>
-        <a href="suggestions.html" class="nav-btn" style="background-color: #48d9f6;">مقترحات</a>
+        <a href="index.html" class="nav-btn">معلومات عني</a>
+        <a href="twitch.html" class="nav-btn active">🎥 البث المباشر</a>
+        <a href="discord.html" class="nav-btn">الديسكورد</a>
+        <a href="suggestions.html" class="nav-btn">المقترحات</a>
         <a href="admin.html" class="admin-btn">الإدارة</a>
     </nav>
 
-    <!-- قسم Twitch -->
-    <section id="twitch" class="section-box">
+    <section class="section-box">
         <div class="transparent-box">
-            <h2 class="section-title">البثوث الحالية</h2>
-            <p>هذه الصفحة قيد التطوير حاليًا. سيتم إضافة بيانات البثوث قريبًا! 🚀</p>
-            <p>في الوقت الحالي، تقدر تزور قناتي على تويتش من الرابط تحت:</p>
-            <a href="https://twitch.tv/i1dmar" target="_blank" class="twitch-link">زوروني على تويتش ❤️</a>
+            <h2>🎥 بث i1Dmar الآن</h2>
+            <p id="stream-status">🔄 جاري التحقق من حالة البث...</p>
+
+            <!-- Twitch Player -->
+            <div id="twitch-container" style="margin-top:25px; display:none;"></div>
+
+            <!-- زر إخطار -->
+            <button id="notify-btn" class="notify-btn" style="margin-top:20px;">
+                🔔 نبّهني وقت البث
+            </button>
         </div>
     </section>
 
-    <!-- الفوتر -->
     <footer>
         <p>© 2025 i1Dmar | جميع الحقوق محفوظة</p>
-        <p id="visitor-count">عدد الزوار: جاري التحميل...</p>
+        <p id="visitor-count">📊 جاري جمع البيانات...</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
+
+    <!-- Twitch API Live Checker -->
+    <script>
+        const channelName = "i1dmar";
+        const clientId = "ue55rubpnnrmskmw9wvv413tupcemf"; 
+        const token = "pvtcqjheacogo7ewilfjwkquwdoxct"; 
+
+        async function checkLive() {
+            try {
+                const res = await fetch(`https://api.twitch.tv/helix/streams?user_login=${channelName}`, {
+                    headers: { 
+                        "Client-ID": clientId,
+                        "Authorization": `Bearer ${token}`
+                    }
+                });
+
+                const data = await res.json();
+
+                if (data.data.length > 0) {
+                    document.getElementById("stream-status").innerHTML = `🟢 البث شغال الآن! تعال شارك 😎🔥`;
+                    document.getElementById("twitch-container").style.display = "block";
+
+                    new Twitch.Embed("twitch-container", {
+                        width: "100%",
+                        height: 500,
+                        channel: channelName,
+                        layout: "video"
+                    });
+
+                } else {
+                    document.getElementById("stream-status").innerHTML = `🔴 ما في بث الآن — تابعني وانتظر البث القادم 💙`;
+                }
+
+            } catch {
+                document.getElementById("stream-status").innerHTML = "⚠️ خطأ أثناء الاتصال بـ Twitch API";
+            }
+        }
+
+        checkLive();
+
+        // زر تنبيه الديسكورد
+        document.getElementById("notify-btn").addEventListener("click", () => {
+            fetch("https://discord.com/api/webhooks/1445311275612508182/xMYbKk4BWPk2HlbAYpwpnVr1hggWxnwFbOoYDse2zJi--PVjcPXOnyXlNVRW_A8YdXHh", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ content: "@everyone 🔔 تنبيه: شخص طلب إخطار عند بدء البث! 💙" })
+            });
+
+            alert("📬 تم إرسال طلب الإشعار! سيتم تنبيهك عند البث 💙");
+        });
+    </script>
+
 </body>
 </html>

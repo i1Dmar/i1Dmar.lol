@@ -1,70 +1,77 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الإدارة | i1Dmar</title>
+    <title>📌 الإدارة | i1Dmar</title>
+
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="https://i.ibb.co/v487RCS6/image-23.jpg">
-    <!-- إضافة Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+    <link rel="icon" href="https://i.ibb.co/v487RCS6/image-23.jpg">
 </head>
-</head>
+
 <body>
-    <!-- تنبيه في الأعلى -->
-    <div id="site-notice" class="site-notice">
-        <p>صفحة البثوث قيد التطوير، ترقبوا التحديثات قريبًا! 🚀</p>
-    </div>
 
-    <!-- زر تبديل الثيم -->
-    <button id="theme-toggle" class="theme-toggle">تبديل الثيم 🌙</button>
-
-    <!-- لوقو الموقع -->
+    <!-- لوقو -->
     <a href="index.html" class="site-logo">
-        <img src="https://i.ibb.co/v487RCS6/image-23.jpg" alt="i1Dmar Logo" loading="lazy">
+        <img src="https://i.ibb.co/v487RCS6/image-23.jpg" alt="logo">
     </a>
 
-    <!-- شريط التنقل العلوي -->
+    <!-- شريط التنقل -->
     <nav id="top-nav">
-        <a href="index.html" class="nav-btn" style="background-color: #ffffff;">معلومات عني</a>
-        <a href="twitch.html" class="nav-btn">البثوث الحالية</a>
-        <a href="discord.html" class="nav-btn" style="background-color: #1462f3;">سيرفري الديسكورد</a>
-        <a href="suggestions.html" class="nav-btn" style="background-color: #48d9f6;">مقترحات</a>
-        <a href="admin.html" class="admin-btn active">الإدارة</a>
+        <a href="index.html" class="nav-btn">معلومات عني</a>
+        <a href="twitch.html" class="nav-btn">🎥 البثوث</a>
+        <a href="discord.html" class="nav-btn">💬 الديسكورد</a>
+        <a href="suggestions.html" class="nav-btn">📝 مقترحات</a>
+        <a href="admin.html" class="admin-btn active">📌 الإدارة</a>
     </nav>
 
-    <!-- قسم الإدارة -->
+    <!-- لوحة الإدارة -->
     <section id="admin" class="section-box">
-        <div class="transparent-box">
-            <!-- نموذج إدخال المفتاح السري -->
-            <div id="admin-login" style="display: none;">
-                <h2 class="section-title">تسجيل الدخول</h2>
-                <div class="input-box">
-                    <label for="admin-key">أدخل المفتاح السري:</label>
-                    <input type="password" id="admin-key" placeholder="المفتاح السري">
-                </div>
-                <button id="admin-login-btn">دخول</button>
-                <p id="admin-error"></p>
+        <div class="transparent-box" style="text-align:center;">
+
+            <!-- تسجيل الدخول -->
+            <div id="admin-login">
+                <h2>🔐 تسجيل الدخول</h2>
+                <input type="password" id="admin-key" placeholder="أدخل المفتاح السري" style="margin-top:10px;">
+                <button id="admin-login-btn" style="margin-top:10px;">دخول</button>
+                <p id="admin-error" style="margin-top:10px; color:#ff4d6d;"></p>
             </div>
 
-            <!-- محتوى الإدارة -->
-            <div id="admin-content" style="display: none;">
-                <h2 class="section-title">الإدارة - الاقتراحات</h2>
-                <button id="admin-logout">تسجيل الخروج</button>
-                <p id="suggestions-stats"></p>
-                <div id="suggestions-list"></div>
+            <!-- محتوى التحكم -->
+            <div id="admin-content" style="display:none;">
+                <h2 style="margin-bottom:20px;">📋 لوحة التحكم</h2>
+
+                <button id="admin-logout" style="margin-bottom:15px;">🚪 تسجيل خروج</button>
+
+                <p id="suggestions-stats" style="opacity:0.7;"></p>
+
+                <div id="suggestions-list"
+                    style="margin-top:20px; text-align:right; max-width:700px; margin-left:auto; margin-right:auto;">
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- الفوتر -->
     <footer>
-        <p>© 2025 i1Dmar | جميع الحقوق محفوظة</p>
-        <p id="visitor-count">عدد الزوار: جاري التحميل...</p>
+        <p>© 2025 i1Dmar</p>
+        <p id="visitor-count">📊 تحميل عدد الزوار...</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
+
+    <script>
+        function updateAdminStats() {
+            const stored = JSON.parse(localStorage.getItem("suggestions") || "[]");
+            document.getElementById("suggestions-stats").innerHTML =
+                `📬 عدد المقترحات الحالية: <strong>${stored.length}</strong>`;
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            updateAdminStats();
+        });
+    </script>
+
 </body>
 </html>

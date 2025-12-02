@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>معلومات عني | i1Dmar</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="https://i.ibb.co/v487RCS6/image-23.jpg">
-    <!-- إضافة Firebase SDK -->
+
+    <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="https://i.ibb.co/v487RCS6/image-23.jpg" />
+
+
+    <!-- Firebase -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
         import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
 
-        // تهيئة Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyDNfa3sOOL5kV7cBchrpkMJNs9HmRl3TnA",
             authDomain: "i1-web.firebaseapp.com",
@@ -20,90 +23,94 @@
             storageBucket: "i1-web.firebasestorage.app",
             messagingSenderId: "234165099932",
             appId: "1:234165099932:web:96563abeb195edf51c7c59",
-            databaseURL: "https://i1-web-default-rtdb.firebaseio.com" // أضفت الـ databaseURL
+            databaseURL: "https://i1-web-default-rtdb.firebaseio.com",
         };
 
-        // تهيئة Firebase
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-        // نعرّف الدوال عشان نستخدمها في script.js
         window.firebaseFunctions = {
             getDatabase: () => database,
             ref: (path) => ref(database, path),
-            set: set,
-            onValue: onValue
+            set,
+            onValue,
         };
     </script>
 </head>
-</body>
-</html>
+
 <body>
-    <!-- تنبيه في الأعلى -->
+    <!-- تنبيه -->
     <div id="site-notice" class="site-notice">
-        <p>صفحة البثوث قيد التطوير، ترقبوا التحديثات قريبًا! 🚀</p>
+        🚧 الصفحة قيد التطوير — تحديثات قادمة قريبًا!
     </div>
 
-    <!-- زر تبديل الثيم -->
-    <button id="theme-toggle" class="theme-toggle">تبديل الثيم 🌙</button>
+    <!-- زر الوضع المظلم -->
+    <button id="theme-toggle" class="theme-toggle">🌙</button>
 
-    <!-- لوقو الموقع -->
+    <!-- لوقو -->
     <a href="index.html" class="site-logo">
-        <img src="https://i.ibb.co/v487RCS6/image-23.jpg" alt="i1Dmar Logo" loading="lazy">
+        <img src="https://i.ibb.co/v487RCS6/image-23.jpg" alt="i1Dmar Logo" />
     </a>
 
-    <!-- شريط التنقل العلوي -->
+    <!-- القائمة -->
     <nav id="top-nav">
-        <a href="index.html" class="nav-btn active" style="background-color: #ffffff;">معلومات عني</a>
-        <a href="twitch.html" class="nav-btn">البثوث الحالية</a>
-        <a href="discord.html" class="nav-btn" style="background-color: #1462f3;">سيرفري الديسكورد</a>
-        <a href="suggestions.html" class="nav-btn" style="background-color: #48d9f6;">مقترحات</a>
-        <a href="admin.html" class="admin-btn">الإدارة</a>
+        <a href="index.html" class="nav-btn active">معلومات عني</a>
+        <a href="twitch.html" class="nav-btn">البثوث</a>
+        <a href="discord.html" class="nav-btn">الديسكورد</a>
+        <a href="suggestions.html" class="nav-btn">مقترحات</a>
+        <a href="admin.html" class="admin-btn">📌 الإدارة</a>
     </nav>
 
-    <!-- قسم معلومات عني -->
+    <!-- معلومات عني -->
     <section id="about-me" class="section-box">
         <div class="transparent-box">
-            <h2 class="section-title">معلومات عني</h2>
-            <p>أسمي خالد ملقب بـدمار ، عمري 26 سنة، أحب ألعب ألعاب الفيديو وأشارككم مغامراتي على تويتش.</p>
-            <p>كل فترةأسوي بثوث على تويتش. إذا تبي تنضم لسيرفر الديسكورد، تلقى الرابط تحت.</p>
-            <p>إذا عندك أي اقتراح لتحسين الصفحة أو المحتوى، لا تتردد وارسله في صفحة المقترحات!</p>
+            <h2>من أنا؟</h2>
+            <p>
+                هلا فيك 👋  
+                أنا خالد، المعروف باسم <strong>دمار</strong>.  
+                لاعب، ستريمر وشخص يحب الألعاب وتفاعل الناس معه 🎮🔥  
+            </p>
+            <p>أحب ألعاب الشوتر، والضحك.. وأحيانًا أعصب (عادي 😅).</p>
+            <p>إذا حاب تشارك وتتابع، روابط حساباتي تحت 👇</p>
+
             <div id="social-links">
-                <a href="https://instagram.com/i1dmar" target="_blank" class="social-icon instagram">
-                    <img src="https://cdn2.iconfinder.com/data/icons/social-icons-33/128/Instagram-512.png" alt="Instagram" loading="lazy">
+                <a href="https://instagram.com/i1dmar" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" width="40" />
                 </a>
-                <a href="https://discord.gg/6WVqFCfVcW" target="_blank" class="social-icon discord">
-                    <img src="https://cdn2.iconfinder.com/data/icons/social-icons-33/128/Discord-512.png" alt="Discord" loading="lazy">
+                <a href="https://discord.gg/6WVqFCfVcW" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg" width="40" />
                 </a>
-                <a href="https://youtube.com/@i1dmar" target="_blank" class="social-icon youtube">
-                    <img src="https://cdn2.iconfinder.com/data/icons/social-icons-33/128/Youtube-512.png" alt="YouTube" loading="lazy">
+                <a href="https://youtube.com/@i1dmar" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg" width="40" />
                 </a>
-                <a href="https://twitch.tv/i1dmar" target="_blank" class="social-icon twitch">
-                    <img src="https://cdn2.iconfinder.com/data/icons/social-icons-33/128/Twitch-512.png" alt="Twitch" loading="lazy">
+                <a href="https://twitch.tv/i1dmar" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitch.svg" width="40" />
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- قسم اللعبة -->
+    <!-- لعبة -->
     <section id="game" class="section-box">
         <div class="transparent-box">
-            <h2 class="section-title">لعبة صغيرة: اضغط على الهدف!</h2>
-            <p>حاول تضغط على الهدف أكثر مرات ممكن في 30 ثانية!</p>
+            <h2>🎯 لعبة صغيرة</h2>
+            <p>اضغط الهدف وجمع أكثر نقاط خلال 30 ثانية!</p>
             <div id="game-area">
                 <div id="target"></div>
             </div>
             <p>النقاط: <span id="score">0</span></p>
-            <button id="start-game">ابدأ اللعبة</button>
+            <button id="start-game">ابدأ</button>
         </div>
     </section>
 
     <!-- الفوتر -->
     <footer>
-        <p>© 2025 i1Dmar | جميع الحقوق محفوظة</p>
-        <p id="visitor-count">عدد الزوار: جاري التحميل...</p>
+        <p>© 2025 i1Dmar</p>
+        <p id="visitor-count">📊 عدد الزوار: ...</p>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- سكربت -->
+    <script src="script.js" defer></script>
 </body>
+
 </html>
