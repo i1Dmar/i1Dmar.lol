@@ -1,214 +1,168 @@
-// دالة لتوليد معرف فريد لكل زائر (باستخدام localStorage)
+// ===============================
+// 🔹 الزيارات
+// ===============================
 function getVisitorId() {
-    let visitorId = localStorage.getItem('visitorId');
-    if (!visitorId) {
-        visitorId = 'visitor_' + Math.random().toString(36).substr(2, 9);
-        localStorage.setItem('visitorId', visitorId);
+    let id = localStorage.getItem('visitor_id');
+    if (!id) {
+        id = `v_${crypto.randomUUID()}`;
+        localStorage.setItem('visitor_id', id);
     }
-    return visitorId;
+    return id;
 }
 
-// دالة لتحديث عدد الزوار
 function updateVisitorCount() {
-    const visitorId = getVisitorId();
-    const { getDatabase, ref, set, onValue } = window.firebaseFunctions;
-    const visitorsRef = ref('visitors');
-    const visitorCountElement = document.getElementById('visitor-count');
+    if (!window.firebaseFunctions) return;
 
-    // تحقق إذا كان الزائر موجود مسبقًا
-    onValue(ref(`visitors/${visitorId}`), (snapshot) => {
-        if (!snapshot.exists()) {
-            // إذا الزائر جديد، أضفه لقاعدة البيانات
-            set(ref(`visitors/${visitorId}`), {
-                timestamp: Date.now()
-            });
+    const { getDatabase, ref, set, onValue } = window.firebaseFunctions;
+    const db = getDatabase();
+    const visitorId = getVisitorId();
+    const visitorsRef = ref(db, "visitors");
+    const visitorSlot = ref(db, `visitors/${visitorId}`);
+    const countDisplay = document.getElementById("visitor-count");
+
+    onValue(visitorSlot, (snap) => {
+        if (!snap.exists()) {
+            set(visitorSlot, { entered: Date.now() });
         }
     }, { onlyOnce: true });
 
-    // احسب عدد الزوار الكلي
-    onValue(visitorsRef, (snapshot) => {
-        const visitorCount = snapshot.val() ? Object.keys(snapshot.val()).length : 0;
-        if (visitorCountElement) {
-            visitorCountElement.innerHTML = `عدد الزوار: ${visitorCount}`;
-        }
+    onValue(visitorsRef, (snap) => {
+        const count = snap.val() ? Object.keys(snap.val()).length : 0;
+        if (countDisplay) countDisplay.innerHTML = `📊 عدد الزوار: ${count}`;
     });
 }
 
-// شغّل الدالة عند تحميل الصفحة
-document.addEventListener('DOMContentLoaded', updateVisitorCount);
+document.addEventListener("DOMContentLoaded", updateVisitorCount);
 
-// المقترحات
-if (document.getElementById('submit-suggestion')) {
-    document.getElementById('submit-suggestion').addEventListener('click', function(e) {
+
+// ===============================
+// 🔹 فلتر الكلمات الممنوعة
+// ===============================
+const badWords = ["fuck", "shit", "زق", "كلب", "عرص", "شرموط", "gay", "وسخ", "طيز", "خراء"];
+
+function containsBadWords(text) {
+    return badWords.some(word => text.includes(word));
+}
+
+
+// ===============================
+// 🔹 إنشاء المقترحات
+// ===============================
+const submitBtn = document.getElementById("submit-suggestion");
+if (submitBtn) {
+    submitBtn.addEventListener("click", (e) => {
         e.preventDefault();
-        const name = document.getElementById('suggestion-name').value.trim();
-        const title = document.getElementById('suggestion-title').value.trim();
-        const details = document.getElementById('suggestion-details').value.trim();
-        const message = document.getElementById('suggestion-message');
 
-        if (!name || !title || !details) {
-            message.classList.add('error');
-            message.innerHTML = 'يرجى ملء جميع الحقول!';
+        const name = document.getElementById("suggestion-name").value.trim();
+        const text = document.getElementById("suggestion-details").value.trim();
+        const messageBox = document.getElementById("suggestion-message");
+
+        if (!name || !text) {
+            messageBox.innerHTML = "⚠️ يجب تعبئة الحقول.";
+            messageBox.classList.add("error");
             return;
         }
 
-        const lastSubmit = localStorage.getItem(`suggestion_${name}`);
-        const now = new Date().toDateString();
-
-        if (lastSubmit === now) {
-            message.classList.add('error');
-            message.innerHTML = 'لقد قدمت اقتراحًا اليوم، جرب غدًا!';
+        if (text.length > 150) {
+            messageBox.innerHTML = "⚠️ الحد الأقصى 150 حرف.";
             return;
         }
 
-        let suggestions = JSON.parse(localStorage.getItem('suggestions')) || [];
-        if (suggestions.length >= 100) {
-            message.classList.add('error');
-            message.innerHTML = 'تم الوصول للحد الأقصى للاقتراحات!';
+        if (containsBadWords(text)) {
+            messageBox.innerHTML = "🚫 تم منع الاقتراح بسبب كلمات غير مناسبة.";
             return;
         }
 
-        suggestions.push({ name, title, details, date: new Date().toLocaleString() });
-        localStorage.setItem('suggestions', JSON.stringify(suggestions));
-        localStorage.setItem(`suggestion_${name}`, now);
+        const lastSubmit = localStorage.getItem(`s_${name}`);
+        const today = new Date().toDateString();
 
-        message.classList.remove('error');
-        message.innerHTML = `شكرًا يا ${name} على اقتراحك! يمكنك رؤيته في صفحة الإدارة.`;
-        setTimeout(() => message.innerHTML = '', 5000);
+        if (lastSubmit === today) {
+            messageBox.innerHTML = "⚠️ يمكنك إرسال اقتراح واحد يوميًا.";
+            return;
+        }
 
-        document.getElementById('suggestion-name').value = '';
-        document.getElementById('suggestion-title').value = '';
-        document.getElementById('suggestion-details').value = '';
-    });
+        const stored = JSON.parse(localStorage.getItem("suggestions") || "[]");
+        stored.push({ name, text, date: new Date().toLocaleString() });
+        localStorage.setItem("suggestions", JSON.stringify(stored));
+        localStorage.setItem(`s_${name}`, today);
 
-    document.getElementById('clear-suggestion').addEventListener('click', () => {
-        document.getElementById('suggestion-name').value = '';
-        document.getElementById('suggestion-title').value = '';
-        document.getElementById('suggestion-details').value = '';
-        document.getElementById('suggestion-message').innerHTML = '';
+        messageBox.innerHTML = `💙 تم إرسال اقتراحك يا ${name}!`;
+        setTimeout(() => messageBox.innerHTML = "", 4000);
+
+        document.getElementById("suggestion-name").value = "";
+        document.getElementById("suggestion-details").value = "";
     });
 }
 
-// الإدارة
-if (document.getElementById('admin')) {
-    if (localStorage.getItem('adminLoggedIn') === 'true') {
-        document.getElementById('admin-login').style.display = 'none';
-        document.getElementById('admin-content').style.display = 'block';
-        loadSuggestions();
-    } else {
-        document.getElementById('admin-login').style.display = 'block';
-        document.getElementById('admin-content').style.display = 'none';
+
+// ===============================
+// 🔹 لوحة الإدارة
+// ===============================
+if (document.getElementById("admin")) {
+
+    const adminPassword = "i1Dmari1998"; // ← تقدر تغيرها لاحقًا
+
+    function loadSuggestions() {
+        const stored = JSON.parse(localStorage.getItem("suggestions") || "[]");
+        const container = document.getElementById("suggestions-list");
+
+        if (stored.length === 0) {
+            container.innerHTML = "<p>🚫 لا يوجد اقتراحات حتى الآن</p>";
+            return;
+        }
+
+        container.innerHTML = stored.map((s, i) => `
+            <div class="suggestion-box">
+                <p><strong>🧑‍💻 الاسم:</strong> ${s.name}</p>
+                <p><strong>💬 الاقتراح:</strong> ${s.text}</p>
+                <p><strong>📅 التاريخ:</strong> ${s.date}</p>
+                <button class="delete" data-i="${i}">🗑 حذف</button>
+            </div>
+        `).join("");
+
+        document.querySelectorAll(".delete").forEach(btn =>
+            btn.addEventListener("click", () => {
+                stored.splice(btn.dataset.i, 1);
+                localStorage.setItem("suggestions", JSON.stringify(stored));
+                loadSuggestions();
+            })
+        );
     }
 
-    document.getElementById('admin-login-btn').addEventListener('click', function() {
-        const key = document.getElementById('admin-key').value;
-        const error = document.getElementById('admin-error');
-        if (key === 'i1Dmari1998') {
-            localStorage.setItem('adminLoggedIn', 'true');
-            document.getElementById('admin-login').style.display = 'none';
-            document.getElementById('admin-content').style.display = 'block';
-            loadSuggestions();
+    if (localStorage.getItem("adminLogged") === "true") {
+        document.getElementById("admin-login").style.display = "none";
+        document.getElementById("admin-content").style.display = "block";
+        loadSuggestions();
+    }
+
+    document.getElementById("admin-login-btn")?.addEventListener("click", () => {
+        const input = document.getElementById("admin-key").value;
+        if (input === adminPassword) {
+            localStorage.setItem("adminLogged", "true");
+            location.reload();
         } else {
-            error.innerHTML = 'المفتاح السري غير صحيح!';
+            document.getElementById("admin-error").innerHTML = "🚫 كلمة مرور خاطئة!";
         }
     });
 
-    document.getElementById('admin-logout')?.addEventListener('click', () => {
-        localStorage.removeItem('adminLoggedIn');
+    document.getElementById("admin-logout")?.addEventListener("click", () => {
+        localStorage.removeItem("adminLogged");
         location.reload();
     });
 }
 
-function loadSuggestions() {
-    const suggestions = JSON.parse(localStorage.getItem('suggestions')) || [];
-    const suggestionsList = document.getElementById('suggestions-list');
-    const statsElement = document.getElementById('suggestions-stats');
 
-    if (suggestions.length === 0) {
-        suggestionsList.innerHTML = '<p>لا يوجد اقتراحات بعد.</p>';
-        statsElement.innerHTML = 'الإحصائيات: لا يوجد اقتراحات';
-    } else {
-        const uniqueUsers = [...new Set(suggestions.map(s => s.name))].length;
-        statsElement.innerHTML = `الإحصائيات: ${suggestions.length} اقتراحات من ${uniqueUsers} أشخاص`;
-        suggestionsList.innerHTML = '';
-        suggestions.forEach((suggestion, index) => {
-            const suggestionBox = document.createElement('div');
-            suggestionBox.className = 'suggestion-box';
-            suggestionBox.innerHTML = `
-                <div class="suggestion-item"><strong>اسم الشخص المرسل:</strong> ${suggestion.name}</div>
-                <div class="suggestion-item"><strong>الموضوع:</strong> ${suggestion.title}</div>
-                <div class="suggestion-item"><strong>اقتراحه:</strong> ${suggestion.details}</div>
-                <div class="suggestion-item"><strong>التاريخ:</strong> ${suggestion.date}</div>
-                <button class="delete-btn" data-index="${index}">حذف الاقتراح</button>
-                <hr>
-            `;
-            suggestionsList.appendChild(suggestionBox);
-        });
-
-        document.querySelectorAll('.delete-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const index = this.getAttribute('data-index');
-                let suggestions = JSON.parse(localStorage.getItem('suggestions')) || [];
-                suggestions.splice(index, 1);
-                localStorage.setItem('suggestions', JSON.stringify(suggestions));
-                location.reload();
-            });
-        });
-    }
-}
-
-// اللعبة
-if (document.getElementById('start-game')) {
-    const startButton = document.getElementById('start-game');
-    const target = document.getElementById('target');
-    const scoreDisplay = document.getElementById('score');
-    const gameArea = document.getElementById('game-area');
-    let score = 0;
-    let gameActive = false;
-
-    startButton.addEventListener('click', () => {
-        if (!gameActive) {
-            gameActive = true;
-            score = 0;
-            scoreDisplay.innerHTML = score;
-            startButton.innerHTML = 'جاري اللعب...';
-            moveTarget();
-            setTimeout(() => {
-                gameActive = false;
-                startButton.innerHTML = 'ابدأ اللعبة';
-                alert(`انتهت اللعبة! نقاطك: ${score}`);
-            }, 30000);
-        }
-    });
-
-    target.addEventListener('click', () => {
-        if (gameActive) {
-            score++;
-            scoreDisplay.innerHTML = score;
-            moveTarget();
-        }
-    });
-
-    function moveTarget() {
-        const maxX = gameArea.offsetWidth - target.offsetWidth;
-        const maxY = gameArea.offsetHeight - target.offsetHeight;
-        const newX = Math.random() * maxX;
-        const newY = Math.random() * maxY;
-        target.style.left = `${newX}px`;
-        target.style.top = `${newY}px`;
-    }
-}
-
-// الثيم الغامق
-const themeToggle = document.getElementById('theme-toggle');
+// ===============================
+// 🔹 الثيم الليلي
+// ===============================
+const themeToggle = document.getElementById("theme-toggle");
 if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
-        themeToggle.innerHTML = document.body.classList.contains('dark-mode') ? 'تبديل الثيم ☀️' : 'تبديل الثيم 🌙';
+    themeToggle.addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+        localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
     });
-    if (localStorage.getItem('theme') === 'dark') {
-        document.body.classList.add('dark-mode');
-        themeToggle.innerHTML = 'تبديل الثيم ☀️';
+
+    if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark-mode");
     }
 }
