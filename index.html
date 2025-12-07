@@ -4,12 +4,10 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>معلومات عني | i1Dmar</title>
+    <title>i1Dmar | الرئيسية</title>
 
     <link rel="stylesheet" href="styles.css" />
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet" />
-    <link rel="icon" type="image/png" href="https://i.ibb.co/v487RCS6/image-23.jpg" />
-
 
     <!-- Firebase -->
     <script type="module">
@@ -39,78 +37,60 @@
 </head>
 
 <body>
-    <!-- تنبيه -->
-    <div id="site-notice" class="site-notice">
-        🚧 الصفحة قيد التطوير — تحديثات قادمة قريبًا!
+
+    <!-- LOADER -->
+    <div id="loader">
+      <div class="loading-circle"></div>
+      <p>جارٍ التحميل...</p>
     </div>
 
-    <!-- زر الوضع المظلم -->
-    <button id="theme-toggle" class="theme-toggle">🌙</button>
+    <!-- Toast -->
+    <div id="toast-container"></div>
 
-    <!-- لوقو -->
-    <a href="index.html" class="site-logo">
-        <img src="https://i.ibb.co/v487RCS6/image-23.jpg" alt="i1Dmar Logo" />
-    </a>
+    <!-- اللوقوً -->
+    <!--
+    <div class="site-logo">
+        <img src="https://k.top4top.io/p_36284cdoa1.png " alt="Logo">
+    </div>
+    -->
 
-    <!-- القائمة -->
+    <!-- البانر -->
+    <div class="banner-container">
+        <img src="https://f.top4top.io/p_3628lecqc1.png" class="banner-image" alt="Banner">
+    </div>
+
+    <!-- أزرار -->
+    <div class="banner-buttons">
+        <a href="twitch.html" class="action-btn">🎮 البثوث</a>
+        <a href="discord.html" class="action-btn discord-btn">💙 مجتمع الديسكورد</a>
+    </div>
+
+    <!-- شريط التنقل -->
     <nav id="top-nav">
-        <a href="index.html" class="nav-btn active">معلومات عني</a>
-        <a href="twitch.html" class="nav-btn">البثوث</a>
-        <a href="discord.html" class="nav-btn">الديسكورد</a>
-        <a href="suggestions.html" class="nav-btn">مقترحات</a>
+        <a href="index.html" class="nav-btn">🏠 الرئيسية</a>
+        <a href="twitch.html" class="nav-btn">🎥 البثوث</a>
+        <a href="discord.html" class="nav-btn">💬 الديسكورد</a>
+        <a href="suggestions.html" class="nav-btn">📝 مقترحات</a>
         <a href="admin.html" class="admin-btn">📌 الإدارة</a>
     </nav>
 
-    <!-- معلومات عني -->
-    <section id="about-me" class="section-box">
+    <!-- من أنا -->
+    <section class="section-box">
         <div class="transparent-box">
-            <h2>من أنا؟</h2>
+            <h2>👋 من أنا؟</h2>
             <p>
-                هلا فيك 👋  
-                أنا خالد، المعروف باسم <strong>دمار</strong>.  
-                لاعب، ستريمر وشخص يحب الألعاب وتفاعل الناس معه 🎮🔥  
+                أنا خالد المعروف باسم <strong style="color:var(--accent)">i1Dmar</strong>.
+             مواليد 1998 — بعض الاحيان أبث بتويتش ، أحب ألعاب الشوتر ، والضحك والسوالف ❤️
             </p>
-            <p>أحب ألعاب الشوتر، والضحك.. وأحيانًا أعصب (عادي 😅).</p>
-            <p>إذا حاب تشارك وتتابع، روابط حساباتي تحت 👇</p>
-
-            <div id="social-links">
-                <a href="https://instagram.com/i1dmar" target="_blank">
-                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" width="40" />
-                </a>
-                <a href="https://discord.gg/6WVqFCfVcW" target="_blank">
-                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg" width="40" />
-                </a>
-                <a href="https://youtube.com/@i1dmar" target="_blank">
-                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/youtube.svg" width="40" />
-                </a>
-                <a href="https://twitch.tv/i1dmar" target="_blank">
-                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitch.svg" width="40" />
-                </a>
-            </div>
         </div>
     </section>
 
-    <!-- لعبة -->
-    <section id="game" class="section-box">
-        <div class="transparent-box">
-            <h2>🎯 لعبة صغيرة</h2>
-            <p>اضغط الهدف وجمع أكثر نقاط خلال 30 ثانية!</p>
-            <div id="game-area">
-                <div id="target"></div>
-            </div>
-            <p>النقاط: <span id="score">0</span></p>
-            <button id="start-game">ابدأ</button>
-        </div>
-    </section>
-
-    <!-- الفوتر -->
+    <!-- فوتر -->
     <footer>
         <p>© 2025 i1Dmar</p>
         <p id="visitor-count">📊 عدد الزوار: ...</p>
     </footer>
 
-    <!-- سكربت -->
     <script src="script.js" defer></script>
 </body>
-
 </html>

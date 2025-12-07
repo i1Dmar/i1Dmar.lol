@@ -2,92 +2,55 @@
 <html lang="ar" dir="rtl">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📝 المقترحات | i1Dmar</title>
-
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="https://i.ibb.co/v487RCS6/image-23.jpg">
+<meta charset="UTF-8">
+<title>i1Dmar | مقترحات</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-    <!-- لوقو -->
-    <a href="index.html" class="site-logo">
-        <img src="https://i.ibb.co/v487RCS6/image-23.jpg" alt="logo">
-    </a>
+<div id="loader"><div class="loading-circle"></div></div>
+<div id="toast-container"></div>
 
-    <!-- شريط التنقل -->
-    <nav id="top-nav">
-        <a href="index.html" class="nav-btn">معلومات عني</a>
-        <a href="twitch.html" class="nav-btn">🎥 البث المباشر</a>
-        <a href="discord.html" class="nav-btn">💬 الديسكورد</a>
-        <a href="suggestions.html" class="nav-btn active">📝 المقترحات</a>
-        <a href="admin.html" class="admin-btn">📌 الإدارة</a>
-    </nav>
+<div class="banner-container">
+  <img src="https://f.top4top.io/p_3628lecqc1.png" class="banner-image" alt="Banner">
+</div>
 
-    <!-- صندوق الاقتراح -->
-    <section class="section-box">
-        <div class="transparent-box">
+<nav id="top-nav">
+  <a href="index.html" class="nav-btn">🏠 الرئيسية</a>
+  <a href="twitch.html" class="nav-btn">🎥 البثوث</a>
+  <a href="discord.html" class="nav-btn">💬 الديسكورد</a>
+  <a href="suggestions.html" class="nav-btn active">📝 مقترحات</a>
+  <a href="admin.html" class="admin-btn">📌 الإدارة</a>
+</nav>
 
-            <h2>📝 شارك اقتراحك</h2>
-            <p style="opacity:.6">ساعدني أطور الموقع والمحتوى ✨</p>
+<section class="section-box">
+  <div class="transparent-box">
+      <h2>مقترح جديد</h2>
 
-            <div class="input-box">
-                <label for="suggestion-name">👤 اسمك أو لقبك</label>
-                <input type="text" id="suggestion-name" placeholder="مثال: دمار، متابع وفي، شخص عابر">
-            </div>
+      <div class="input-box">
+          <label>الاسم أو اللقب</label>
+          <input id="suggestion-name" placeholder="اسمك (اختياري)">
+      </div>
 
-            <div class="input-box">
-                <label for="suggestion-details">💬 اقتراحك (150 حرف فقط)</label>
-                <textarea id="suggestion-details" placeholder="اكتب اقتراحك هنا 👇" maxlength="150"></textarea>
-            </div>
+      <div class="input-box">
+          <label>المقترح</label>
+          <textarea id="suggestion-details" maxlength="150" placeholder="فكرتك هنا (150 حرف)"></textarea>
+      </div>
 
-            <label style="display:flex; gap:8px; margin-top:10px;">
-                <input type="checkbox" id="anonymous-mode">
-                إرسال كـ مجهول 🔒
-            </label>
+      <label>
+          <input type="checkbox" id="anonymous-mode">
+          إرسال كمجهول 🚀
+      </label><br><br>
 
-            <button id="submit-suggestion" style="margin-top:15px;">📤 إرسال</button>
-            <p id="suggestion-message" style="margin-top:10px;"></p>
+      <button id="submit-suggestion">✔ إرسال</button>
+  </div>
+</section>
 
-            <hr style="margin:25px 0; opacity:.1;">
+<footer>
+  <p>© 2025 i1Dmar</p>
+</footer>
 
-            <p id="suggestions-count">📊 عدد الاقتراحات المخزنة: 0</p>
-
-        </div>
-    </section>
-
-
-    <!-- الفوتر -->
-    <footer>
-        <p>© 2025 i1Dmar</p>
-        <p id="visitor-count">📁 يجري تحميل عدد الزوار...</p>
-    </footer>
-
-    <script src="script.js" defer></script>
-
-    <script>
-        // تحديث عدد الاقتراحات من الـ localStorage
-        function updateSuggestionCounter() {
-            const stored = JSON.parse(localStorage.getItem("suggestions") || "[]");
-            document.getElementById("suggestions-count").innerText =
-                `📊 عدد الاقتراحات المخزنة: ${stored.length}`;
-        }
-
-        updateSuggestionCounter();
-
-        // تعديل الاسم إذا تم تفعيل الوضع المجهول
-        document.getElementById("submit-suggestion").addEventListener("click", () => {
-            const checkbox = document.getElementById("anonymous-mode");
-            if (checkbox.checked) {
-                document.getElementById("suggestion-name").value = "🚀 مجهول";
-            }
-
-            setTimeout(() => updateSuggestionCounter(), 800);
-        });
-    </script>
-
+<script src="script.js" defer></script>
 </body>
 </html>

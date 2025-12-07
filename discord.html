@@ -1,52 +1,48 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💙 الديسكورد | i1Dmar</title>
 
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="https://i.ibb.co/v487RCS6/image-23.jpg">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>i1Dmar | الديسكورد</title>
+    <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
 
-    <!-- شعار -->
-    <a href="index.html" class="site-logo">
-        <img src="https://i.ibb.co/v487RCS6/image-23.jpg" alt="logo">
-    </a>
+    <!-- LOADER -->
+    <div id="loader">
+      <div class="loading-circle"></div>
+    </div>
 
-    <!-- الشريط -->
+    <!-- Toast -->
+    <div id="toast-container"></div>
+
+    <!-- البانر -->
+    <div class="banner-container">
+        <img src="https://f.top4top.io/p_3628lecqc1.png" class="banner-image" alt="Banner">
+    </div>
+
     <nav id="top-nav">
-        <a href="index.html" class="nav-btn">معلومات عني</a>
-        <a href="twitch.html" class="nav-btn">🎥 البث المباشر</a>
-        <a href="discord.html" class="nav-btn active">💙 سيرفري</a>
+        <a href="index.html" class="nav-btn">🏠 الرئيسية</a>
+        <a href="twitch.html" class="nav-btn">🎥 البثوث</a>
+        <a href="discord.html" class="nav-btn active">💬 الديسكورد</a>
         <a href="suggestions.html" class="nav-btn">📝 مقترحات</a>
         <a href="admin.html" class="admin-btn">📌 الإدارة</a>
     </nav>
 
-    <!-- محتوى -->
     <section class="section-box">
         <div class="transparent-box">
-            <h2>💙 سيرفر الديسكورد</h2>
-            <p>مكان نتجمع فيه، نضحك، نلعب، ونسوي بثوث مع بعض 🎮🔥</p>
-
-            <iframe src="https://discord.com/widget?id=1288660116502861824&theme=dark"
-            width="100%" height="400" style="border-radius:12px;border:none;" allowtransparency="true" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-
-            <a href="https://discord.gg/6WVqFCfVcW" target="_blank" class="join-btn">
-                🚀 انضم الآن
-            </a>
+            <h2>💙 مجتمع الديسكورد</h2>
+            <p>أهلاً بك! تقدر تنضم هنا 👇</p>
+            <a href="https://discord.gg/6WVqFCfVcW" target="_blank" class="action-btn discord-btn">💙 انضم الآن</a>
         </div>
     </section>
 
     <footer>
         <p>© 2025 i1Dmar</p>
-        <p id="visitor-count">📊 تحميل...</p>
     </footer>
 
     <script src="script.js" defer></script>
-
 </body>
 </html>

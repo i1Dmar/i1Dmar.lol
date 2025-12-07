@@ -1,168 +1,200 @@
-// ===============================
-// 🔹 الزيارات
-// ===============================
-function getVisitorId() {
-    let id = localStorage.getItem('visitor_id');
-    if (!id) {
-        id = `v_${crypto.randomUUID()}`;
-        localStorage.setItem('visitor_id', id);
-    }
-    return id;
-}
+/** CORE CLASSES **/
 
-function updateVisitorCount() {
-    if (!window.firebaseFunctions) return;
-
-    const { getDatabase, ref, set, onValue } = window.firebaseFunctions;
-    const db = getDatabase();
-    const visitorId = getVisitorId();
-    const visitorsRef = ref(db, "visitors");
-    const visitorSlot = ref(db, `visitors/${visitorId}`);
-    const countDisplay = document.getElementById("visitor-count");
-
-    onValue(visitorSlot, (snap) => {
-        if (!snap.exists()) {
-            set(visitorSlot, { entered: Date.now() });
-        }
-    }, { onlyOnce: true });
-
-    onValue(visitorsRef, (snap) => {
-        const count = snap.val() ? Object.keys(snap.val()).length : 0;
-        if (countDisplay) countDisplay.innerHTML = `📊 عدد الزوار: ${count}`;
-    });
-}
-
-document.addEventListener("DOMContentLoaded", updateVisitorCount);
-
-
-// ===============================
-// 🔹 فلتر الكلمات الممنوعة
-// ===============================
-const badWords = ["fuck", "shit", "زق", "كلب", "عرص", "شرموط", "gay", "وسخ", "طيز", "خراء"];
-
-function containsBadWords(text) {
-    return badWords.some(word => text.includes(word));
-}
-
-
-// ===============================
-// 🔹 إنشاء المقترحات
-// ===============================
-const submitBtn = document.getElementById("submit-suggestion");
-if (submitBtn) {
-    submitBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-
-        const name = document.getElementById("suggestion-name").value.trim();
-        const text = document.getElementById("suggestion-details").value.trim();
-        const messageBox = document.getElementById("suggestion-message");
-
-        if (!name || !text) {
-            messageBox.innerHTML = "⚠️ يجب تعبئة الحقول.";
-            messageBox.classList.add("error");
-            return;
-        }
-
-        if (text.length > 150) {
-            messageBox.innerHTML = "⚠️ الحد الأقصى 150 حرف.";
-            return;
-        }
-
-        if (containsBadWords(text)) {
-            messageBox.innerHTML = "🚫 تم منع الاقتراح بسبب كلمات غير مناسبة.";
-            return;
-        }
-
-        const lastSubmit = localStorage.getItem(`s_${name}`);
-        const today = new Date().toDateString();
-
-        if (lastSubmit === today) {
-            messageBox.innerHTML = "⚠️ يمكنك إرسال اقتراح واحد يوميًا.";
-            return;
-        }
-
-        const stored = JSON.parse(localStorage.getItem("suggestions") || "[]");
-        stored.push({ name, text, date: new Date().toLocaleString() });
-        localStorage.setItem("suggestions", JSON.stringify(stored));
-        localStorage.setItem(`s_${name}`, today);
-
-        messageBox.innerHTML = `💙 تم إرسال اقتراحك يا ${name}!`;
-        setTimeout(() => messageBox.innerHTML = "", 4000);
-
-        document.getElementById("suggestion-name").value = "";
-        document.getElementById("suggestion-details").value = "";
-    });
-}
-
-
-// ===============================
-// 🔹 لوحة الإدارة
-// ===============================
-if (document.getElementById("admin")) {
-
-    const adminPassword = "i1Dmari1998"; // ← تقدر تغيرها لاحقًا
-
-    function loadSuggestions() {
-        const stored = JSON.parse(localStorage.getItem("suggestions") || "[]");
-        const container = document.getElementById("suggestions-list");
-
-        if (stored.length === 0) {
-            container.innerHTML = "<p>🚫 لا يوجد اقتراحات حتى الآن</p>";
-            return;
-        }
-
-        container.innerHTML = stored.map((s, i) => `
-            <div class="suggestion-box">
-                <p><strong>🧑‍💻 الاسم:</strong> ${s.name}</p>
-                <p><strong>💬 الاقتراح:</strong> ${s.text}</p>
-                <p><strong>📅 التاريخ:</strong> ${s.date}</p>
-                <button class="delete" data-i="${i}">🗑 حذف</button>
-            </div>
-        `).join("");
-
-        document.querySelectorAll(".delete").forEach(btn =>
-            btn.addEventListener("click", () => {
-                stored.splice(btn.dataset.i, 1);
-                localStorage.setItem("suggestions", JSON.stringify(stored));
-                loadSuggestions();
-            })
-        );
-    }
-
-    if (localStorage.getItem("adminLogged") === "true") {
-        document.getElementById("admin-login").style.display = "none";
-        document.getElementById("admin-content").style.display = "block";
-        loadSuggestions();
-    }
-
-    document.getElementById("admin-login-btn")?.addEventListener("click", () => {
-        const input = document.getElementById("admin-key").value;
-        if (input === adminPassword) {
-            localStorage.setItem("adminLogged", "true");
-            location.reload();
-        } else {
-            document.getElementById("admin-error").innerHTML = "🚫 كلمة مرور خاطئة!";
-        }
-    });
-
-    document.getElementById("admin-logout")?.addEventListener("click", () => {
-        localStorage.removeItem("adminLogged");
-        location.reload();
-    });
-}
-
-
-// ===============================
-// 🔹 الثيم الليلي
-// ===============================
-const themeToggle = document.getElementById("theme-toggle");
-if (themeToggle) {
-    themeToggle.addEventListener("click", () => {
-        document.body.classList.toggle("dark-mode");
-        localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
-    });
-
-    if (localStorage.getItem("theme") === "dark") {
-        document.body.classList.add("dark-mode");
+class FirebaseService {
+    constructor() {
+        const fb = window.firebaseFunctions;
+        if (!fb) return;
+        this.db = fb.getDatabase();
+        this.ref = fb.ref;
+        this.set = fb.set;
+        this.onValue = fb.onValue;
     }
 }
+
+class VisitorCounter extends FirebaseService {
+    constructor() {
+        super();
+        this.countRef = this.ref("visitorCount");
+    }
+
+    init() {
+        if (!this.onValue) return;
+        this.onValue(this.countRef, snapshot => {
+            const count = snapshot.val() || 0;
+            document.getElementById("visitor-count").innerText =
+                `📊 عدد الزوار: ${count}`;
+            this.set(this.countRef, count + 1);
+        });
+    }
+}
+
+class SuggestionSystem {
+    constructor() {
+        this.storageKey = "suggestions";
+        this.badWords = ["قحب","وسخ","نيك","كلب","fuck","shit","sex","gay"];
+    }
+
+    load() {
+        return JSON.parse(localStorage.getItem(this.storageKey) || "[]");
+    }
+
+    save(list) {
+        localStorage.setItem(this.storageKey, JSON.stringify(list));
+    }
+
+    filter(text) {
+        let x = text;
+        this.badWords.forEach(w => {
+            x = x.replace(new RegExp(w, "gi"), "****");
+        });
+        return x;
+    }
+
+    submit(name, content, anonymous) {
+        const list = this.load();
+        list.push({
+            name: anonymous ? "🚀 مجهول" : name,
+            content: this.filter(content),
+            date: new Date().toLocaleString()
+        });
+        this.save(list);
+    }
+}
+
+class AdminPanel extends SuggestionSystem {
+    constructor() {
+        super();
+        this.password = "i1DmarSecure";
+    }
+
+    login(key) {
+        return key === this.password;
+    }
+
+    render(container) {
+        const list = this.load();
+        container.innerHTML = "";
+
+        list.forEach((s,i)=>{
+            const div = document.createElement("div");
+            div.className = "transparent-box";
+            div.innerHTML = `
+                <strong>${s.name}</strong>
+                <p>${s.content}</p>
+                <small>${s.date}</small><br><br>
+                <button data-id="${i}" class="delete-btn">🗑 حذف</button>
+            `;
+            container.appendChild(div);
+        });
+
+        document.querySelectorAll(".delete-btn").forEach(btn=>{
+            btn.addEventListener("click", ()=>{
+                this.delete(btn.dataset.id, container);
+                showToast("🗑 تم حذف اقتراح", "success");
+            });
+        });
+    }
+
+    delete(index, container) {
+        const list = this.load();
+        list.splice(index,1);
+        this.save(list);
+        this.render(container);
+    }
+}
+
+class TwitchStatus {
+    constructor() {
+        this.channel = "i1dmar";
+        this.clientId = "ue55rubpnnrmskmw9wvv413tupcemf";
+        this.token = "pvtcqjheacogo7ewilfjwkquwdoxct";
+    }
+
+    async check() {
+        const text = document.getElementById("stream-status");
+        const box = document.getElementById("twitch-container");
+        if (!text) return;
+        try {
+            const res = await fetch(`https://api.twitch.tv/helix/streams?user_login=${this.channel}`,{
+                headers:{
+                    "Client-ID": this.clientId,
+                    "Authorization": `Bearer ${this.token}`
+                }
+            });
+            const data = await res.json();
+            if (data.data.length > 0){
+                text.innerText = "🟢 البث شغال الآن!";
+                box.style.display = "block";
+                new Twitch.Embed("twitch-container", {
+                    width:"100%", height:480, channel:this.channel
+                });
+            } else {
+                text.innerText = "🔴 لا يوجد بث الآن";
+            }
+        } catch(e){ text.innerText="⚠ مشكلة في Twitch API"; }
+    }
+}
+
+/** TOAST */
+function showToast(msg,type="info"){
+    const container = document.getElementById("toast-container");
+    const div = document.createElement("div");
+    div.classList.add("toast");
+    if (type==="success") div.style.borderColor="#00ffae";
+    if (type==="error") div.style.borderColor="var(--danger)";
+    div.textContent = msg;
+    container.appendChild(div);
+    setTimeout(()=>{
+        div.style.opacity=0;
+        setTimeout(()=>div.remove(),500);
+    },3000);
+}
+
+/** LOADER */
+window.addEventListener("load",()=>{
+    setTimeout(()=>{
+        const l = document.getElementById("loader");
+        l.style.opacity = 0;
+        setTimeout(()=> l.remove(),500);
+    },400);
+});
+
+/** INIT */
+document.addEventListener("DOMContentLoaded",()=>{
+
+    new VisitorCounter().init();
+
+    const s = new SuggestionSystem();
+    const btn = document.getElementById("submit-suggestion");
+
+    if (btn){
+        btn.addEventListener("click",()=>{
+            const n = document.getElementById("suggestion-name").value;
+            const c = document.getElementById("suggestion-details").value;
+            const a = document.getElementById("anonymous-mode").checked;
+            if (!c.trim()) return showToast("⚠ اكتب اقتراحك","error");
+
+            s.submit(n,c,a);
+            showToast("✨ تم الإرسال!","success");
+            setTimeout(()=> location.reload(),1000);
+        });
+    }
+
+    const login = document.getElementById("admin-login-btn");
+    if (login){
+        const admin = new AdminPanel();
+        login.addEventListener("click",()=>{
+            const key = document.getElementById("admin-key").value;
+            const err = document.getElementById("admin-error");
+            if (admin.login(key)){
+                document.getElementById("admin-login").style.display="none";
+                document.getElementById("admin-content").style.display="block";
+                admin.render(document.getElementById("suggestions-list"));
+            } else {
+                showToast("❌ كلمة المرور خاطئة","error");
+            }
+        });
+    }
+
+    new TwitchStatus().check();
+});

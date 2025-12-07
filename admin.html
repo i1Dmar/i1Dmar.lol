@@ -2,76 +2,49 @@
 <html lang="ar" dir="rtl">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📌 الإدارة | i1Dmar</title>
-
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="icon" href="https://i.ibb.co/v487RCS6/image-23.jpg">
+<meta charset="UTF-8">
+<title>i1Dmar | الإدارة</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-    <!-- لوقو -->
-    <a href="index.html" class="site-logo">
-        <img src="https://i.ibb.co/v487RCS6/image-23.jpg" alt="logo">
-    </a>
+<div id="loader"><div class="loading-circle"></div></div>
+<div id="toast-container"></div>
 
-    <!-- شريط التنقل -->
-    <nav id="top-nav">
-        <a href="index.html" class="nav-btn">معلومات عني</a>
-        <a href="twitch.html" class="nav-btn">🎥 البثوث</a>
-        <a href="discord.html" class="nav-btn">💬 الديسكورد</a>
-        <a href="suggestions.html" class="nav-btn">📝 مقترحات</a>
-        <a href="admin.html" class="admin-btn active">📌 الإدارة</a>
-    </nav>
+<div class="banner-container">
+  <img src="https://f.top4top.io/p_3628lecqc1.png" class="banner-image" alt="Banner">
+</div>
 
-    <!-- لوحة الإدارة -->
-    <section id="admin" class="section-box">
-        <div class="transparent-box" style="text-align:center;">
+<nav id="top-nav">
+  <a href="index.html" class="nav-btn">🏠 الرئيسية</a>
+  <a href="twitch.html" class="nav-btn">🎥 البثوث</a>
+  <a href="discord.html" class="nav-btn">💬 الديسكورد</a>
+  <a href="suggestions.html" class="nav-btn">📝 مقترحات</a>
+  <a href="admin.html" class="admin-btn active">📌 الإدارة</a>
+</nav>
 
-            <!-- تسجيل الدخول -->
-            <div id="admin-login">
-                <h2>🔐 تسجيل الدخول</h2>
-                <input type="password" id="admin-key" placeholder="أدخل المفتاح السري" style="margin-top:10px;">
-                <button id="admin-login-btn" style="margin-top:10px;">دخول</button>
-                <p id="admin-error" style="margin-top:10px; color:#ff4d6d;"></p>
-            </div>
+<section class="section-box">
 
-            <!-- محتوى التحكم -->
-            <div id="admin-content" style="display:none;">
-                <h2 style="margin-bottom:20px;">📋 لوحة التحكم</h2>
+  <div id="admin-login" class="transparent-box">
+      <h2>🔐 تسجيل دخول المشرف</h2>
+      <input id="admin-key" placeholder="كلمة المرور">
+      <br><br>
+      <button id="admin-login-btn">✔ دخول</button>
+      <p id="admin-error" style="color:red"></p>
+  </div>
 
-                <button id="admin-logout" style="margin-bottom:15px;">🚪 تسجيل خروج</button>
+  <div id="admin-content" style="display:none" class="transparent-box">
+      <h2>📜 جميع المقترحات</h2>
+      <div id="suggestions-list"></div>
+  </div>
 
-                <p id="suggestions-stats" style="opacity:0.7;"></p>
+</section>
 
-                <div id="suggestions-list"
-                    style="margin-top:20px; text-align:right; max-width:700px; margin-left:auto; margin-right:auto;">
-                </div>
-            </div>
-        </div>
-    </section>
+<footer>
+  <p>© 2025 i1Dmar</p>
+</footer>
 
-    <footer>
-        <p>© 2025 i1Dmar</p>
-        <p id="visitor-count">📊 تحميل عدد الزوار...</p>
-    </footer>
-
-    <script src="script.js" defer></script>
-
-    <script>
-        function updateAdminStats() {
-            const stored = JSON.parse(localStorage.getItem("suggestions") || "[]");
-            document.getElementById("suggestions-stats").innerHTML =
-                `📬 عدد المقترحات الحالية: <strong>${stored.length}</strong>`;
-        }
-
-        document.addEventListener("DOMContentLoaded", () => {
-            updateAdminStats();
-        });
-    </script>
-
+<script src="script.js" defer></script>
 </body>
 </html>

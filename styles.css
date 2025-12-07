@@ -1,8 +1,3 @@
-/* ==========================
-🌙 DMAR Neon Dark Theme UI
-By ChatGPT Custom Build
-========================== */
-
 :root {
     --main: #6a5cff;
     --accent: #00eaff;
@@ -12,176 +7,200 @@ By ChatGPT Custom Build
     --glass: rgba(255, 255, 255, 0.08);
     --blur: 15px;
     --transition: 0.25s ease;
-    --radius: 12px;
+    --radius: 14px;
 }
 
-/* خلفية متحركة */
+/* خلفية */
 body {
     font-family: "Tajawal", sans-serif;
-    background: linear-gradient(135deg, #0b0c10, #1a1f2b, #0b0c10);
+    background: linear-gradient(135deg, #0b0c10, #10131c, #121623, #0b0c10);
     background-size: 250% 250%;
     animation: gradientShift 12s ease infinite;
     margin: 0;
     padding: 0;
     color: var(--text);
-    overflow-x: hidden;
 }
 
-/* تأثير الخلفية */
 @keyframes gradientShift {
     0% { background-position: 0% 30%; }
     50% { background-position: 100% 70%; }
     100% { background-position: 0% 30%; }
 }
 
-/* تأثير Trail للماوس */
-body::after {
-    content: "";
-    width: 12px;
-    height: 12px;
-    position: fixed;
-    background: var(--accent);
-    border-radius: 50%;
-    pointer-events: none;
-    filter: blur(6px);
-    transition: 0.05s;
-    mix-blend-mode: screen;
-}
-
-body:hover::after {
-    transform: translate(var(--x), var(--y));
-}
-
-/* JavaScript يحرك المؤشر */
 html { scroll-behavior: smooth; }
 
-/* 🎛 شريط التنقل */
+/* Logo */
+.site-logo img {
+    width: 110px;
+    margin: 25px auto;
+    display: block;
+    transition: .3s;
+    filter: drop-shadow(0px 0px 12px rgba(0, 255, 255, 0.35));
+}
+.site-logo img:hover {
+    transform: scale(1.08);
+}
+
+/* Banner */
+.banner-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.banner-image {
+    width: 100%;
+    max-width: 950px;
+    transition: .35s ease;
+    border-radius: var(--radius);
+    filter: drop-shadow(0px 0px 25px rgba(0, 238, 255, 0.25));
+}
+.banner-image:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0px 0px 45px rgba(0, 238, 255, 0.55));
+}
+
+/* Banner Buttons */
+.banner-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin: 14px 0 25px;
+}
+
+.action-btn {
+    padding: 12px 22px;
+    background: var(--main);
+    border-radius: var(--radius);
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: .3s;
+    box-shadow: 0 0 12px rgba(0, 217, 255, 0.2);
+}
+
+.action-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 26px var(--accent);
+}
+
+.discord-btn { background: #5865F2; }
+
+/* Navigation */
 #top-nav {
     display: flex;
     justify-content: center;
     gap: 15px;
     padding: 18px;
-    position: sticky;
-    top: 0;
+    background: rgba(0, 0, 0, 0.25);
     backdrop-filter: blur(12px);
-    background: rgba(0, 0, 0, 0.35);
     border-bottom: 1px solid rgba(255,255,255,0.05);
-    z-index: 999;
+    margin-bottom: 25px;
 }
 
 .nav-btn, .admin-btn {
     color: var(--text);
     padding: 10px 18px;
+    border-radius: var(--radius);
+    background: var(--glass);
     text-decoration: none;
-    background: var(--glass);
-    border-radius: var(--radius);
-    transition: var(--transition);
-    border: solid 1px transparent;
-}
-
-.nav-btn:hover,
-.admin-btn:hover {
-    transform: scale(1.06);
-    border-color: var(--accent);
-    box-shadow: 0 0 12px var(--accent);
-}
-
-/* 🔥 زر الإدارة */
-.admin-btn {
-    background: var(--danger);
-}
-
-/* 🧊 صناديق المحتوى */
-.transparent-box {
-    background: var(--glass);
-    backdrop-filter: blur(var(--blur));
-    padding: 25px;
-    margin: 40px auto;
-    width: min(90%, 900px);
-    border-radius: var(--radius);
-    border: 1px solid rgba(255,255,255,0.04);
-    box-shadow: 0 0 25px rgba(0,0,0,0.4);
-    animation: fadeUp 0.7s ease forwards;
-    opacity: 0;
-    transform: translateY(15px);
-}
-
-/* انيميشن دخول */
-@keyframes fadeUp {
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* العناوين */
-h2 {
-    color: var(--accent);
-    font-size: 26px;
-    margin-bottom: 18px;
-}
-
-/* أيقونات السوشيال */
-#social-links a img {
-    width: 48px;
-    margin: 10px;
-    transition: var(--transition);
-    filter: drop-shadow(0px 0px 6px var(--main));
-}
-
-#social-links a:hover img {
-    transform: scale(1.15) rotate(4deg);
-}
-
-/* أزرار عامة */
-button, #submit-suggestion {
-    background: var(--main);
-    color: #fff;
-    border: none;
-    padding: 12px 22px;
-    border-radius: var(--radius);
-    cursor: pointer;
     transition: var(--transition);
 }
 
-button:hover {
-    background: var(--accent);
-    box-shadow: 0 0 12px var(--accent);
-    transform: scale(1.05);
-}
-
-/* نموذج الاقتراح */
-.input-box input, .input-box textarea {
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.08);
-    color: var(--text);
-    border-radius: var(--radius);
-    padding: 12px;
-    width: 100%;
-}
-
-/* 🔥 لوحة الإدارة */
-.suggestion-box {
-    padding: 15px;
-    background: rgba(255,255,255,0.06);
-    border-radius: var(--radius);
-    margin-bottom: 12px;
-    border: 1px solid rgba(255,255,255,0.04);
-}
-
-/* 🎯 لعبة الهدف */
-#game-area {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.05);
-    border-radius: var(--radius);
-}
-
-#target {
-    background: var(--accent);
+.nav-btn:hover {
+    transform: scale(1.1);
     box-shadow: 0 0 18px var(--accent);
 }
 
-/* الفوتر */
+.admin-btn {
+    background: var(--danger);
+    color: #fff;
+}
+
+/* Box */
+.section-box {
+    width: min(90%, 900px);
+    margin: 0 auto;
+}
+
+.transparent-box {
+    background: var(--glass);
+    padding: 25px;
+    border-radius: var(--radius);
+    backdrop-filter: blur(var(--blur));
+    border: 1px solid rgba(255,255,255,0.05);
+    box-shadow: 0 0 25px rgba(0,0,0,0.4);
+}
+
+h2 {
+    color: var(--accent);
+    margin-bottom: 8px;
+}
+
+/* Footer */
 footer {
+    margin-top: 50px;
     text-align: center;
-    padding: 18px;
-    opacity: 0.7;
     font-size: 14px;
+    opacity: .6;
+}
+
+/* Loader */
+#loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0e0f13;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    z-index: 9999;
+    transition: 0.5s ease;
+}
+
+.loading-circle {
+    width: 55px;
+    height: 55px;
+    border: 5px solid rgba(255,255,255,0.2);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 1.2s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Toast */
+#toast-container {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 99999;
+}
+
+.toast {
+    background: var(--glass);
+    backdrop-filter: blur(15px);
+    padding: 14px 20px;
+    border-radius: 12px;
+    color: var(--text);
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 0 18px rgba(0,255,255,0.3);
+    animation: toastIn .4s ease forwards;
+    opacity: 0;
+}
+
+@keyframes toastIn {
+    to {
+        opacity: 1;
+        transform: translateY(-10px);
+    }
 }
