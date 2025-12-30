@@ -42,25 +42,64 @@ body {
   100% { background-position: 0% 30%; }
 }
 
-/* طبقة المطر */
+/* طبقة المطر بلونين - أزرق فاتح وأحمر غامق */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -2;
   pointer-events: none;
-  opacity: 0.2;
+  opacity: 0.25;
   background-image:
-    radial-gradient(4px 100px at 0px 235px, #09f, #0000),
-    radial-gradient(4px 100px at 300px 235px, #09f, #0000),
-    radial-gradient(1.5px 1.5px at 150px 117.5px, #09f 100%, #0000 150%);
-  background-size: 300px 235px;
+    /* قطرات زرقاء فاتحة */
+    radial-gradient(4px 100px at 0px 235px, #00d4ff, #0000),
+    radial-gradient(4px 100px at 300px 235px, #00d4ff, #0000),
+    radial-gradient(1.5px 1.5px at 150px 117.5px, #00d4ff 100%, #0000 150%),
+    radial-gradient(4px 100px at 0px 252px, #00d4ff, #0000),
+    radial-gradient(4px 100px at 300px 252px, #00d4ff, #0000),
+    /* قطرات حمراء غامقة */
+    radial-gradient(4px 100px at 50px 150px, #8b0000, #0000),
+    radial-gradient(4px 100px at 350px 150px, #8b0000, #0000),
+    radial-gradient(1.5px 1.5px at 200px 75px, #8b0000 100%, #0000 150%),
+    radial-gradient(4px 100px at 100px 253px, #8b0000, #0000),
+    radial-gradient(4px 100px at 400px 253px, #8b0000, #0000),
+    /* قطرات زرقاء */
+    radial-gradient(4px 100px at 25px 204px, #00d4ff, #0000),
+    radial-gradient(4px 100px at 325px 204px, #00d4ff, #0000),
+    radial-gradient(1.5px 1.5px at 175px 102px, #00d4ff 100%, #0000 150%),
+    /* قطرات حمراء */
+    radial-gradient(4px 100px at 75px 134px, #8b0000, #0000),
+    radial-gradient(4px 100px at 375px 134px, #8b0000, #0000),
+    radial-gradient(1.5px 1.5px at 225px 67px, #8b0000 100%, #0000 150%),
+    /* قطرات زرقاء */
+    radial-gradient(4px 100px at 125px 179px, #00d4ff, #0000),
+    radial-gradient(4px 100px at 425px 179px, #00d4ff, #0000),
+    /* قطرات حمراء */
+    radial-gradient(4px 100px at 150px 299px, #8b0000, #0000),
+    radial-gradient(4px 100px at 450px 299px, #8b0000, #0000);
+  background-size:
+    300px 235px, 300px 235px, 300px 235px, 300px 252px, 300px 252px,
+    300px 150px, 300px 150px, 300px 150px, 300px 253px, 300px 253px,
+    300px 204px, 300px 204px, 300px 204px, 300px 134px, 300px 134px,
+    300px 134px, 300px 179px, 300px 179px, 300px 299px, 300px 299px;
   animation: rainAnimation 150s linear infinite;
 }
 
 @keyframes rainAnimation {
-  0% { background-position: 0px 220px; }
-  100% { background-position: 0px 6800px; }
+  0% {
+    background-position:
+      0px 220px, 3px 220px, 151.5px 337.5px, 25px 24px, 28px 24px,
+      50px 16px, 53px 16px, 201.5px 91px, 75px 224px, 78px 224px,
+      100px 19px, 103px 19px, 251.5px 121px, 125px 120px, 128px 120px,
+      276.5px 187px, 150px 31px, 153px 31px, 175px 235px, 178px 235px;
+  }
+  100% {
+    background-position:
+      0px 6800px, 3px 6800px, 151.5px 6917.5px, 25px 13632px, 28px 13632px,
+      50px 5416px, 53px 5416px, 201.5px 5491px, 75px 17175px, 78px 17175px,
+      100px 5119px, 103px 5119px, 251.5px 5221px, 125px 8428px, 128px 8428px,
+      276.5px 8495px, 150px 9876px, 153px 9876px, 175px 13391px, 178px 13391px;
+  }
 }
 
 body::after {
@@ -286,28 +325,28 @@ body::after {
   .main-logo {
     max-width: 280px;
   }
-  
+
   .about-box-horizontal {
     padding: 20px;
   }
-  
+
   .about-title {
     font-size: 1.3em;
   }
-  
+
   .about-text {
     font-size: 1em;
   }
-  
+
   .social-links {
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
-  
+
   .social-btn {
     padding: 15px 10px;
   }
-  
+
   .social-btn i {
     font-size: 1.6em;
   }
