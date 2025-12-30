@@ -3,36 +3,11 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>i1Dmar | الرئيسية</title>
-
+    <title>i1Dmar | الصفحة الرئيسية</title>
     <link rel="stylesheet" href="styles.css" />
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet" />
-
-    <!-- Firebase -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyDNfa3sOOL5kV7cBchrpkMJNs9HmRl3TnA",
-            authDomain: "i1-web.firebaseapp.com",
-            projectId: "i1-web",
-            storageBucket: "i1-web.firebasestorage.app",
-            messagingSenderId: "234165099932",
-            appId: "1:234165099932:web:96563abeb195edf51c7c59",
-            databaseURL: "https://i1-web-default-rtdb.firebaseio.com",
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
-
-        window.firebaseFunctions = {
-            getDatabase: () => database,
-            ref: (path) => ref(database, path),
-            set,
-            onValue,
-        };
-    </script>
+    <!-- Font Awesome للأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 </head>
 
 <body>
@@ -42,47 +17,66 @@
         <p>جارٍ التحميل...</p>
     </div>
 
-    <!-- Toast -->
-    <div id="toast-container"></div>
-
-    <!-- البانر -->
-    <div class="banner-container">
-        <img src="https://c.top4top.io/p_3651q6xs11.png"
-             class="banner-image banner-logo"
-             alt="i1Dmar Logo Banner">
-    </div>
-
-    <!-- أزرار -->
-    <div class="banner-buttons">
-        <a href="twitch.html" class="action-btn">🎮 البثوث</a>
-        <a href="discord.html" class="action-btn discord-btn">💙 مجتمع الديسكورد</a>
-    </div>
-
-    <!-- شريط التنقل -->
-    <nav id="top-nav">
-        <a href="index.html" class="nav-btn">🏠 الرئيسية</a>
-        <a href="twitch.html" class="nav-btn">🎥 البثوث</a>
-        <a href="discord.html" class="nav-btn">💬 الديسكورد</a>
-    </nav>
-
-    <!-- من أنا -->
-    <section class="section-box">
-        <div class="transparent-box">
-            <h2>👋 من أنا؟</h2>
-            <p>
-                أنا خالد المعروف باسم
-                <strong style="color:var(--accent)">i1Dmar</strong>.
-                مواليد 1998 — بعض الاحيان أبث بتويتش ، أحب ألعاب الشوتر ، والضحك والسوالف ❤️
-            </p>
+    <!-- الحاوية الرئيسية -->
+    <div class="main-container">
+        <!-- الشعار -->
+        <div class="logo-section">
+            <img src="https://c.top4top.io/p_3651q6xs11.png" alt="i1Dmar Logo" class="main-logo">
         </div>
-    </section>
 
-    <!-- فوتر -->
-    <footer>
-        <p>© 2025 i1Dmar</p>
-        <p id="visitor-count">📊 عدد الزوار: ...</p>
-    </footer>
+        <!-- معلومات "من أنا" -->
+        <section class="about-section">
+            <div class="about-box">
+                <h2>👋 من أنا؟</h2>
+                <p>
+                    أنا <strong class="highlight">خالد</strong> المعروف باسم <strong class="highlight">i1Dmar</strong>
+                    <br>
+                    مواليد 1998 — بعض الاحيان أبث بتويتش ، أحب ألعاب الشوتر ، والضحك والسوالف ❤️
+                </p>
+            </div>
+        </section>
 
-    <script src="script.js" defer></script>
+        <!-- مواقع التواصل الاجتماعي -->
+        <section class="social-section">
+            <h3 class="social-title">تابعني على</h3>
+            <div class="social-links">
+                <a href="https://www.instagram.com/i1dmar" target="_blank" class="social-btn instagram" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                    <span>Instagram</span>
+                </a>
+                <a href="https://www.youtube.com/@i1dmar" target="_blank" class="social-btn youtube" title="YouTube">
+                    <i class="fab fa-youtube"></i>
+                    <span>YouTube</span>
+                </a>
+                <a href="https://www.twitch.tv/i1dmar" target="_blank" class="social-btn twitch" title="Twitch">
+                    <i class="fab fa-twitch"></i>
+                    <span>Twitch</span>
+                </a>
+                <a href="https://twitter.com/i1dmar" target="_blank" class="social-btn twitter" title="Twitter">
+                    <i class="fab fa-x-twitter"></i>
+                    <span>Twitter</span>
+                </a>
+                <a href="https://kick.com/i1dmar" target="_blank" class="social-btn kick" title="Kick">
+                    <i class="fas fa-play-circle"></i>
+                    <span>Kick</span>
+                </a>
+                <a href="https://www.roblox.com/users/8332512746" target="_blank" class="social-btn roblox" title="Roblox">
+                    <i class="fas fa-gamepad"></i>
+                    <span>Roblox</span>
+                </a>
+                <a href="https://discord.gg/6WVqFCfVcW" target="_blank" class="social-btn discord" title="Discord">
+                    <i class="fab fa-discord"></i>
+                    <span>Discord</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- الفوتر -->
+        <footer class="footer">
+            <p>© 2025 i1Dmar</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>

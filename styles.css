@@ -1,97 +1,61 @@
 :root {
   --main: #6a5cff;
   --accent: #00eaff;
-  --danger: #ff4d6d;
   --text: #d9d9d9;
-  --bg: #0e0f13;
   --glass: rgba(255, 255, 255, 0.08);
   --blur: 15px;
-  --transition: 0.25s ease;
   --radius: 14px;
+  --transition: 0.3s ease;
 }
 
-/* خلفية + مطر خفيف */
-body {
-  font-family: "Tajawal", sans-serif;
+/* خلفية مع مطر خفيف */
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Tajawal", sans-serif;
   color: var(--text);
   position: relative;
   min-height: 100vh;
   background: linear-gradient(135deg, #0b0c10, #10131c, #121623, #0b0c10);
   background-size: 250% 250%;
   animation: gradientShift 12s ease infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
 }
 
-/* التدرج الأساسي */
 @keyframes gradientShift {
   0% { background-position: 0% 30%; }
   50% { background-position: 100% 70%; }
   100% { background-position: 0% 30%; }
 }
 
-/* طبقة المطر الأساسية (خفيفة وشفافة) */
+/* طبقة المطر */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -2;
   pointer-events: none;
-  opacity: 0.25; /* كثافة المطر - زيد/قلل حسب رغبتك */
+  opacity: 0.2;
   background-image:
     radial-gradient(4px 100px at 0px 235px, #09f, #0000),
     radial-gradient(4px 100px at 300px 235px, #09f, #0000),
-    radial-gradient(1.5px 1.5px at 150px 117.5px, #09f 100%, #0000 150%),
-    radial-gradient(4px 100px at 0px 252px, #09f, #0000),
-    radial-gradient(4px 100px at 300px 252px, #09f, #0000),
-    radial-gradient(1.5px 1.5px at 150px 126px, #09f 100%, #0000 150%),
-    radial-gradient(4px 100px at 0px 150px, #09f, #0000),
-    radial-gradient(4px 100px at 300px 150px, #09f, #0000),
-    radial-gradient(1.5px 1.5px at 150px 75px, #09f 100%, #0000 150%),
-    radial-gradient(4px 100px at 0px 253px, #09f, #0000),
-    radial-gradient(4px 100px at 300px 253px, #09f, #0000),
-    radial-gradient(1.5px 1.5px at 150px 126.5px, #09f 100%, #0000 150%),
-    radial-gradient(4px 100px at 0px 204px, #09f, #0000),
-    radial-gradient(4px 100px at 300px 204px, #09f, #0000),
-    radial-gradient(1.5px 1.5px at 150px 102px, #09f 100%, #0000 150%),
-    radial-gradient(4px 100px at 0px 134px, #09f, #0000),
-    radial-gradient(4px 100px at 300px 134px, #09f, #0000),
-    radial-gradient(1.5px 1.5px at 150px 67px, #09f 100%, #0000 150%),
-    radial-gradient(4px 100px at 0px 179px, #09f, #0000),
-    radial-gradient(4px 100px at 300px 179px, #09f, #0000),
-    radial-gradient(1.5px 1.5px at 150px 89.5px, #09f 100%, #0000 150%),
-    radial-gradient(4px 100px at 0px 299px, #09f, #0000),
-    radial-gradient(4px 100px at 300px 299px, #09f, #0000),
-    radial-gradient(1.5px 1.5px at 150px 149.5px, #09f 100%, #0000 150%),
-    radial-gradient(4px 100px at 0px 215px, #09f, #0000),
-    radial-gradient(4px 100px at 300px 215px, #09f, #0000),
-    radial-gradient(1.5px 1.5px at 150px 107.5px, #09f 100%, #0000 150%),
-    radial-gradient(4px 100px at 0px 281px, #09f, #0000),
-    radial-gradient(4px 100px at 300px 281px, #09f, #0000),
-    radial-gradient(1.5px 1.5px at 150px 140.5px, #09f 100%, #0000 150%),
-    radial-gradient(4px 100px at 0px 158px, #09f, #0000),
-    radial-gradient(4px 100px at 300px 158px, #09f, #0000),
-    radial-gradient(1.5px 1.5px at 150px 79px, #09f 100%, #0000 150%),
-    radial-gradient(4px 100px at 0px 210px, #09f, #0000),
-    radial-gradient(4px 100px at 300px 210px, #09f, #0000),
-    radial-gradient(1.5px 1.5px at 150px 105px, #09f 100%, #0000 150%);
-  background-size:
-    300px 235px, 300px 235px, 300px 235px,
-    300px 252px, 300px 252px, 300px 252px,
-    300px 150px, 300px 150px, 300px 150px,
-    300px 253px, 300px 253px, 300px 253px,
-    300px 204px, 300px 204px, 300px 204px,
-    300px 134px, 300px 134px, 300px 134px,
-    300px 179px, 300px 179px, 300px 179px,
-    300px 299px, 300px 299px, 300px 299px,
-    300px 215px, 300px 215px, 300px 215px,
-    300px 281px, 300px 281px, 300px 281px,
-    300px 158px, 300px 158px, 300px 158px,
-    300px 210px, 300px 210px, 300px 210px;
+    radial-gradient(1.5px 1.5px at 150px 117.5px, #09f 100%, #0000 150%);
+  background-size: 300px 235px;
   animation: rainAnimation 150s linear infinite;
 }
 
-/* طبقة نقاط خفيفة فوق المطر */
+@keyframes rainAnimation {
+  0% { background-position: 0px 220px; }
+  100% { background-position: 0px 6800px; }
+}
+
 body::after {
   content: "";
   position: fixed;
@@ -99,172 +63,141 @@ body::after {
   z-index: -1;
   pointer-events: none;
   opacity: 0.3;
-  background-image: radial-gradient(
-    ellipse 1.5px 2px at 1.5px 50%,
-    #0000 0,
-    #0000 90%,
-    #000 100%
-  );
+  background-image: radial-gradient(ellipse 1.5px 2px at 1.5px 50%, #0000 0, #0000 90%, #000 100%);
   background-size: 25px 8px;
 }
 
-/* حركة المطر */
-@keyframes rainAnimation {
-  0% {
-    background-position:
-      0px 220px, 3px 220px, 151.5px 337.5px,
-      25px 24px, 28px 24px, 176.5px 150px,
-      50px 16px, 53px 16px, 201.5px 91px,
-      75px 224px, 78px 224px, 226.5px 350.5px,
-      100px 19px, 103px 19px, 251.5px 121px,
-      125px 120px, 128px 120px, 276.5px 187px,
-      150px 31px, 153px 31px, 301.5px 120.5px,
-      175px 235px, 178px 235px, 326.5px 384.5px,
-      200px 121px, 203px 121px, 351.5px 228.5px,
-      225px 224px, 228px 224px, 376.5px 364.5px,
-      250px 26px, 253px 26px, 401.5px 105px,
-      275px 75px, 278px 75px, 426.5px 180px;
-  }
-  100% {
-    background-position:
-      0px 6800px, 3px 6800px, 151.5px 6917.5px,
-      25px 13632px, 28px 13632px, 176.5px 13758px,
-      50px 5416px, 53px 5416px, 201.5px 5491px,
-      75px 17175px, 78px 17175px, 226.5px 17301.5px,
-      100px 5119px, 103px 5119px, 251.5px 5221px,
-      125px 8428px, 128px 8428px, 276.5px 8495px,
-      150px 9876px, 153px 9876px, 301.5px 9965.5px,
-      175px 13391px, 178px 13391px, 326.5px 13540.5px,
-      200px 14741px, 203px 14741px, 351.5px 14848.5px,
-      225px 18770px, 228px 18770px, 376.5px 18910.5px,
-      250px 5082px, 253px 5082px, 401.5px 5161px,
-      275px 6375px, 278px 6375px, 426.5px 6480px;
-  }
-}
-
-
-html { scroll-behavior: smooth; }
-
-/* Logo (لو حاب تستخدمه لاحقاً) */
-.site-logo img {
-  width: 110px;
-  margin: 25px auto;
-  display: block;
-  transition: .3s;
-  filter: drop-shadow(0px 0px 12px rgba(0, 255, 255, 0.35));
-}
-
-.site-logo img:hover {
-  transform: scale(1.08);
-}
-
-/* Banner */
-.banner-container {
-  display: flex;
-  justify-content: center;
+/* الحاوية الرئيسية */
+.main-container {
   width: 100%;
-  margin-top: 25px;
+  max-width: 700px;
+  text-align: center;
+  z-index: 1;
 }
 
-.banner-image {
-  width: 100%;
-  max-width: 600px;          /* عرض مناسب */
-  transition: .35s ease;
-  border-radius: var(--radius);
-  filter: drop-shadow(0px 0px 25px rgba(0, 238, 255, 0.25));
+/* الشعار */
+.logo-section {
+  margin-bottom: 30px;
+  animation: fadeInDown 0.8s ease;
 }
 
-/* تصغير الارتفاع للبانر */
-.banner-logo {
-  max-height: 160px;         /* غيّر الرقم لو تبيها أنحف أو أعلى */
-  width: auto;
-  object-fit: contain;
-  background: transparent;
-}
-
-.banner-image:hover {
-  transform: scale(1.05);
-  filter: drop-shadow(0px 0px 45px rgba(0, 238, 255, 0.55));
-}
-
-/* Banner Buttons */
-.banner-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 18px;
-  margin: 14px 0 25px;
-}
-
-.action-btn {
-  padding: 12px 22px;
-  background: var(--main);
-  border-radius: var(--radius);
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  transition: .3s;
-  box-shadow: 0 0 12px rgba(0, 217, 255, 0.2);
-}
-
-.action-btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 26px var(--accent);
-}
-
-.discord-btn { background: #5865F2; }
-
-/* Navigation */
-#top-nav {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  padding: 18px;
-  background: rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  margin-bottom: 25px;
-}
-
-.nav-btn {
-  color: var(--text);
-  padding: 10px 18px;
-  border-radius: var(--radius);
-  background: var(--glass);
-  text-decoration: none;
+.main-logo {
+  max-width: 400px;
+  width: 90%;
+  height: auto;
+  filter: drop-shadow(0 0 30px rgba(0, 238, 255, 0.4));
   transition: var(--transition);
 }
 
-.nav-btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 18px var(--accent);
+.main-logo:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 50px rgba(0, 238, 255, 0.6));
 }
 
-/* Box */
-.section-box {
-  width: min(90%, 900px);
-  margin: 0 auto;
+/* صندوق "من أنا" */
+.about-section {
+  margin-bottom: 40px;
+  animation: fadeInUp 0.8s ease 0.2s both;
 }
 
-.transparent-box {
+.about-box {
   background: var(--glass);
-  padding: 25px;
-  border-radius: var(--radius);
   backdrop-filter: blur(var(--blur));
-  border: 1px solid rgba(255,255,255,0.05);
-  box-shadow: 0 0 25px rgba(0,0,0,0.4);
+  padding: 30px;
+  border-radius: var(--radius);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  transition: var(--transition);
 }
 
-h2 {
+.about-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 238, 255, 0.2);
+}
+
+.about-box h2 {
   color: var(--accent);
-  margin-bottom: 8px;
+  font-size: 1.8em;
+  margin-bottom: 15px;
 }
 
-/* Footer */
-footer {
-  margin-top: 50px;
-  text-align: center;
-  font-size: 14px;
-  opacity: .6;
+.about-box p {
+  font-size: 1.1em;
+  line-height: 1.8;
+  color: var(--text);
+}
+
+.highlight {
+  color: var(--accent);
+  font-weight: bold;
+}
+
+/* مواقع التواصل */
+.social-section {
+  margin-bottom: 40px;
+  animation: fadeInUp 0.8s ease 0.4s both;
+}
+
+.social-title {
+  color: var(--accent);
+  font-size: 1.5em;
+  margin-bottom: 25px;
+  font-weight: 700;
+}
+
+.social-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 15px;
+  padding: 0 10px;
+}
+
+.social-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 18px 12px;
+  background: var(--glass);
+  backdrop-filter: blur(var(--blur));
+  border-radius: var(--radius);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-decoration: none;
+  color: var(--text);
+  transition: var(--transition);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.social-btn i {
+  font-size: 2em;
+}
+
+.social-btn span {
+  font-size: 0.95em;
+  font-weight: 600;
+}
+
+.social-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* ألوان خاصة لكل منصة */
+.instagram:hover { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: white; }
+.youtube:hover { background: #FF0000; color: white; }
+.twitch:hover { background: #9146FF; color: white; }
+.twitter:hover { background: #000000; color: white; }
+.kick:hover { background: #53fc18; color: #000; }
+.roblox:hover { background: #00a2ff; color: white; }
+.discord:hover { background: #5865F2; color: white; }
+
+/* الفوتر */
+.footer {
+  margin-top: 40px;
+  padding: 20px;
+  font-size: 0.9em;
+  opacity: 0.7;
+  animation: fadeIn 0.8s ease 0.6s both;
 }
 
 /* Loader */
@@ -287,7 +220,7 @@ footer {
 .loading-circle {
   width: 55px;
   height: 55px;
-  border: 5px solid rgba(255,255,255,0.2);
+  border: 5px solid rgba(255, 255, 255, 0.2);
   border-top-color: var(--accent);
   border-radius: 50%;
   animation: spin 1.2s linear infinite;
@@ -297,45 +230,62 @@ footer {
   to { transform: rotate(360deg); }
 }
 
-/* Toast */
-#toast-container {
-  position: fixed;
-  bottom: 25px;
-  right: 25px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  z-index: 99999;
-}
-
-.toast {
-  background: var(--glass);
-  backdrop-filter: blur(15px);
-  padding: 14px 20px;
-  border-radius: 12px;
-  color: var(--text);
-  border: 1px solid rgba(255,255,255,0.15);
-  box-shadow: 0 0 18px rgba(0,255,255,0.3);
-  animation: toastIn .4s ease forwards;
-  opacity: 0;
-}
-
-@keyframes toastIn {
+/* أنيميشن */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
   to {
     opacity: 1;
-    transform: translateY(-10px);
+    transform: translateY(0);
   }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .banner-buttons {
-    flex-direction: column;
+  .main-logo {
+    max-width: 280px;
+  }
+  
+  .about-box {
+    padding: 20px;
+  }
+  
+  .about-box h2 {
+    font-size: 1.5em;
+  }
+  
+  .about-box p {
+    font-size: 1em;
+  }
+  
+  .social-links {
+    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
-
-  #top-nav {
-    flex-wrap: wrap;
-    gap: 10px;
+  
+  .social-btn {
+    padding: 15px 10px;
+  }
+  
+  .social-btn i {
+    font-size: 1.6em;
   }
 }
