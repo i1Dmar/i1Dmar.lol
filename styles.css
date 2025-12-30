@@ -105,39 +105,42 @@ body::after {
   filter: drop-shadow(0 0 50px rgba(0, 238, 255, 0.6));
 }
 
-/* صندوق "من أنا" */
+/* قسم "من أنا" */
 .about-section {
   margin-bottom: 40px;
   animation: fadeInUp 0.8s ease 0.2s both;
 }
 
-.about-box {
+/* صندوق "من أنا" الأفقي */
+.about-box-horizontal {
   background: var(--glass);
   backdrop-filter: blur(var(--blur));
-  padding: 30px;
+  padding: 25px 30px;
   border-radius: var(--radius);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   transition: var(--transition);
-  text-align: center;
+  text-align: right;
   margin: 0 auto;
 }
 
-.about-box:hover {
+.about-box-horizontal:hover {
   transform: translateY(-5px);
   box-shadow: 0 12px 40px rgba(0, 238, 255, 0.2);
 }
 
-.about-box h2 {
+.about-title {
   color: var(--accent);
-  font-size: 1.8em;
-  margin-bottom: 15px;
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  font-weight: 700;
 }
 
-.about-box p {
-  font-size: 1.1em;
-  line-height: 1.8;
+.about-text {
+  font-size: 1.05em;
+  line-height: 1.7;
   color: var(--text);
+  margin: 0;
 }
 
 .highlight {
@@ -284,15 +287,15 @@ body::after {
     max-width: 280px;
   }
   
-  .about-box {
+  .about-box-horizontal {
     padding: 20px;
   }
   
-  .about-box h2 {
-    font-size: 1.5em;
+  .about-title {
+    font-size: 1.3em;
   }
   
-  .about-box p {
+  .about-text {
     font-size: 1em;
   }
   
