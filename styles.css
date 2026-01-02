@@ -253,6 +253,51 @@ body::after {
   color: var(--text) !important;
 }
 
+/* عداد الزوار */
+.visitor-counter {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+  background: var(--glass) !important;
+  backdrop-filter: blur(var(--blur)) !important;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  margin-bottom: 15px;
+  font-size: 1.1em;
+  color: var(--accent) !important;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(0, 238, 255, 0.2) !important;
+  transition: var(--transition);
+}
+
+.visitor-counter:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 238, 255, 0.4) !important;
+}
+
+.visitor-counter i {
+  font-size: 1.2em;
+  color: var(--accent) !important;
+  animation: pulse 2s ease infinite;
+}
+
+#visitor-count {
+  color: #fff !important;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 1px;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes countUp {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
 #loader {
   position: fixed;
   top: 0;
@@ -313,29 +358,34 @@ body::after {
   .main-logo {
     max-width: 280px;
   }
-  
+
   .about-box-horizontal {
     padding: 20px;
   }
-  
+
   .about-title {
     font-size: 1.3em;
   }
-  
+
   .about-text {
     font-size: 1em;
   }
-  
+
   .social-links {
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
-  
+
   .social-btn {
     padding: 15px 10px;
   }
-  
+
   .social-btn i {
     font-size: 1.6em;
+  }
+
+  .visitor-counter {
+    font-size: 1em;
+    padding: 8px 16px;
   }
 }
